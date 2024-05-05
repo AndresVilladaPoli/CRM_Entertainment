@@ -46,9 +46,6 @@ public class ContactDaoImp implements IContactDao {
     @Transactional
     public Contact findOne(Long Id) {
 
-
-
-
       return em.find(Contact.class, Id);
     }
 
