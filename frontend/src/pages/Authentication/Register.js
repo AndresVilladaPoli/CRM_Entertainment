@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -13,6 +14,7 @@ const Register = props => {
   document.title = "Register";
 
   const dispatch = useDispatch();
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   const validation = useFormik({
     enableReinitialize: true,
@@ -28,7 +30,12 @@ const Register = props => {
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
-      dispatch(registerUser(values));
+      if (termsAccepted) {
+        dispatch(registerUser(values));
+        alert("Register User Successfully");
+      } else {
+        alert("Please accept the terms and conditions.");
+      }
     }
   });
 
@@ -147,6 +154,19 @@ const Register = props => {
                         ) : null}
                       </div>
 
+                      <div className="mb-3 form-check">
+                        <Input
+                          type="checkbox"
+                          id="termsAccepted"
+                          checked={termsAccepted}
+                          onChange={() => setTermsAccepted(!termsAccepted)}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label" htmlFor="termsAccepted">
+                          I agree to the Terms of Use*
+                        </Label>
+                      </div>
+
                       <div className="mt-3 d-grid">
                       <button
                           className="btn btn-primary btn-block"
@@ -157,14 +177,6 @@ const Register = props => {
                         </button>
                       </div>
 
-                      <div className="mt-4 text-center">
-                        <p className="mb-0">
-                          By registering you agree to the Spectra Sphere{" "}
-                          <Link to="#" className="text-primary">
-                            Terms of Use
-                          </Link>
-                        </p>
-                      </div>
                     </Form>
                   </div>
                 </CardBody>
@@ -172,7 +184,7 @@ const Register = props => {
               <div className="mt-5 text-center">
                 <p>
                   Already have an account ?{" "}
-                  <Link to="/" className="font-weight-medium text-primary">
+                  <Link to="/login" className="fw-medium " style={{color:'#8F6FA0', fontSize:'15px'}}>
                     {" "}
                     Login
                   </Link>{" "}
