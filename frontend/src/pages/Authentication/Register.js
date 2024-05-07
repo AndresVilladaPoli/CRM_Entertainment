@@ -1,85 +1,79 @@
-import PropTypes from "prop-types";
 import React from "react";
-
-import { Row, Col, CardBody, Card, Alert, Container, Form, Input, FormFeedback, Label } from "reactstrap";
-
-//redux
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import withRouter from "components/Common/withRouter";
-
-// Formik validation
+import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { registerUser } from "store/auth/register/actions";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
+import logosp from "../../assets/images/logosp.png";
 
+const Register = props => {
 
-// actions
-import { loginUser } from "../../store/actions";
-
-// import images
-import profile from "assets/images/logosp.png";
-
-const Login = props => {
-
-  //meta title
-  document.title = "Login | SpectraSphere";
+  document.title = "Register";
 
   const dispatch = useDispatch();
 
   const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      email: "admin@example.com" || '',
-      password: "123456" || '',
+      email: '',
+      username: '',
+      password: '',
     },
     validationSchema: Yup.object({
       email: Yup.string().required("Please Enter Your Email"),
+      username: Yup.string().required("Please Enter Your Username"),
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
-      dispatch(loginUser(values, props.router.navigate));
+      dispatch(registerUser(values));
     }
   });
 
-  const { error } = useSelector(state => ({
-    error: state.Login.error,
+  const { user, registrationError, loading } = useSelector(state => ({
+    user: state.Register.user,
+    registrationError: state.Register.registrationError,
+    loading: state.Register.loading,
   }));
 
- 
 
 
   return (
     <React.Fragment>
-      <div className="home-btn d-none d-sm-block">
-        <Link to="/" className="text-dark">
-          <i className="bx bx-home h2" />
-        </Link>
-      </div>
+
       <div className="account-pages my-5 pt-sm-5">
         <Container>
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
               <Card className="overflow-hidden">
-                <div style={{backgroundColor: '#C9B7D2' }}>
+              <div style={{backgroundColor: '#C9B7D2' }}>
                   <Row>
-                    
-                    <Col xs={7}>
+                    <Col className="col-7">
                       <div className="text-primary p-4">
-                        <h5  style={{color:'#0A0B24', fontSize:'25px'}}>Welcome Back !</h5>
-                        <p style={{color:'#0A0B24', fontSize:'15px'}}>Sign in to continue </p>
+                        <h5 style={{color:'#0A0B24', fontSize:'25px'}}>Free Register</h5>
+                        <p style={{color:'#0A0B24', fontSize:'15px'}}>Get your account now.</p>
                       </div>
                     </Col>
-                    <Col className="col-5 align-self-end">
-                      <img src={profile}  height="152"/>
-                    </Col>
+
                   </Row>
                 </div>
-                <CardBody className="pt-0 shadow-lg" >
-                 
-                  <div className="p-2" >
+                <CardBody className="pt-0">
+                  <div>
+                      <div className="avatar-md profile-user-wid mb-4">
+                        <span className="avatar-title rounded-circle bg-light">
+                          <img
+                            src={logosp}
+                            alt=""
+                            className="rounded-circle"
+                            height="90"
+                          />
+                        </span>
+                      </div>
+
+                  </div>
+                  <div className="p-2">
                     <Form
                       className="form-horizontal"
                       onSubmit={(e) => {
@@ -88,11 +82,20 @@ const Login = props => {
                         return false;
                       }}
                     >
-                      {error ? <Alert color="dark">{error}</Alert> : null}
+                      {user && user ? (
+                        <Alert color="success">
+                          Register User Successfully
+                        </Alert>
+                      ) : null}
+
+                      {registrationError && registrationError ? (
+                        <Alert color="danger">{registrationError}</Alert>
+                      ) : null}
 
                       <div className="mb-3">
                         <Label className="form-label">Email</Label>
                         <Input
+                          id="email"
                           name="email"
                           className="form-control"
                           placeholder="Enter email"
@@ -110,14 +113,31 @@ const Login = props => {
                       </div>
 
                       <div className="mb-3">
+                        <Label className="form-label">Username</Label>
+                        <Input
+                          name="username"
+                          type="text"
+                          placeholder="Enter username"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.username || ""}
+                          invalid={
+                            validation.touched.username && validation.errors.username ? true : false
+                          }
+                        />
+                        {validation.touched.username && validation.errors.username ? (
+                          <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
+                        ) : null}
+                      </div>
+                      <div className="mb-3">
                         <Label className="form-label">Password</Label>
                         <Input
                           name="password"
-                          value={validation.values.password || ""}
                           type="password"
                           placeholder="Enter Password"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
+                          value={validation.values.password || ""}
                           invalid={
                             validation.touched.password && validation.errors.password ? true : false
                           }
@@ -127,47 +147,38 @@ const Login = props => {
                         ) : null}
                       </div>
 
-                      <div className="form-check">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="customControlInline"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="customControlInline"
-                        >
-                          Remember me
-                        </label>
-                      </div>
-
                       <div className="mt-3 d-grid">
-                        <button
+                      <button
                           className="btn btn-primary btn-block"
                           type="submit"
                           style={{backgroundColor: '#C9B7D2' , color:'#0A0B24'}}
                         >
-                          Log In
+                          Register
                         </button>
                       </div>
 
-                      
-
+                      <div className="mt-4 text-center">
+                        <p className="mb-0">
+                          By registering you agree to the Spectra Sphere{" "}
+                          <Link to="#" className="text-primary">
+                            Terms of Use
+                          </Link>
+                        </p>
+                      </div>
                     </Form>
                   </div>
                 </CardBody>
               </Card>
               <div className="mt-5 text-center">
                 <p>
-                  Don&#39;t have an account ?{" "}
-                  <Link to="/register" className="fw-medium " style={{color:'#8F6FA0', fontSize:'15px'}}>
+                  Already have an account ?{" "}
+                  <Link to="/" className="font-weight-medium text-primary">
                     {" "}
-                    SignUp now{" "}
+                    Login
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Created 
-                  <i className="mdi mdi-heart text-danger" /> by Andrea, Dayron, Mateo & Andrés
+                  © {new Date().getFullYear()} Spectra Sphere.{" "}
                 </p>
               </div>
             </Col>
@@ -178,8 +189,4 @@ const Login = props => {
   );
 };
 
-export default withRouter(Login);
-
-Login.propTypes = {
-  history: PropTypes.object,
-};
+export default Register;
