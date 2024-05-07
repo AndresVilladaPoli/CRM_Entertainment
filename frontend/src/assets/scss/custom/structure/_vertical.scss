@@ -8,6 +8,7 @@
     li {
         display: block;
         width: 100%;
+
     }
 
     .mm-collapse {
@@ -36,7 +37,7 @@
 .vertical-menu {
   width: $sidebar-width;
   z-index: 1001;
-  background: $sidebar-bg;
+  background-color: #C9B7D2;
   bottom: 0;
   margin-top: 0;
   position: fixed;
@@ -165,27 +166,27 @@
     cursor: default;
     font-size: 11px;
     text-transform: uppercase;
-    color: $sidebar-menu-item-icon-color;
+    color: white;
     font-weight: $font-weight-semibold;
 }
 
 .mm-active {
-    color: $sidebar-menu-item-active-color !important;
+   color: white !important;
     > a{
-        color: $sidebar-menu-item-active-color !important;
+        color: white !important;
         i {
-            color: $sidebar-menu-item-active-color !important;
+            color: white !important;
         }
     }
     .active {
-        color: $sidebar-menu-item-active-color !important;
+        color: white !important;
 
         i {
-            color: $sidebar-menu-item-active-color !important;
+            color: white !important;
         }
     }
     > i {
-        color: $sidebar-menu-item-active-color !important;
+        color: white !important;
     }
 }
 
@@ -386,7 +387,7 @@
 
 body[data-sidebar="dark"] {
     .vertical-menu {
-        background: $sidebar-dark-bg;
+        background-color: #6E6189;
     }
 
     #sidebar-menu {
@@ -394,10 +395,11 @@ body[data-sidebar="dark"] {
         ul {
             li {
                 a {
-                    color: $sidebar-dark-menu-item-color;
+                    color: white;
+                    font-size: 15px;
 
                     i {
-                        color: $sidebar-dark-menu-item-icon-color;
+                        color: white;
                     }
     
                     &:hover {
@@ -431,7 +433,7 @@ body[data-sidebar="dark"] {
     // Side menu
     .vertical-menu {
       .navbar-brand-box {
-        background: $sidebar-dark-bg;
+        background-color: #6E6189; 
       }
       // Sidebar Menu
       #sidebar-menu {
@@ -501,7 +503,7 @@ body[data-sidebar="dark"] {
     }
 
     .menu-title {
-        color: $sidebar-dark-menu-item-icon-color;
+        color: white;
     }
 }
 
