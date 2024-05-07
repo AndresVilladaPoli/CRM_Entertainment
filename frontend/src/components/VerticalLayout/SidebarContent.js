@@ -3,15 +3,12 @@ import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 
 
-// //Import Scrollbar
 import SimpleBar from "simplebar-react";
 
-// MetisMenu
 import MetisMenu from "metismenujs";
 import withRouter from "components/Common/withRouter";
 import { Link } from "react-router-dom";
 
-//i18n
 import { withTranslation } from "react-i18next";
 
 const SidebarContent = props => {
@@ -30,20 +27,20 @@ const SidebarContent = props => {
       const parent2 = parent.parentElement;
 
       if (parent2) {
-        parent2.classList.add("mm-show"); // ul tag
+        parent2.classList.add("mm-show"); 
 
-        const parent3 = parent2.parentElement; // li tag
+        const parent3 = parent2.parentElement; 
 
         if (parent3) {
-          parent3.classList.add("mm-active"); // li
-          parent3.childNodes[0].classList.add("mm-active"); //a
-          const parent4 = parent3.parentElement; // ul
+          parent3.classList.add("mm-active"); 
+          parent3.childNodes[0].classList.add("mm-active"); 
+          const parent4 = parent3.parentElement; 
           if (parent4) {
-            parent4.classList.add("mm-show"); // ul
+            parent4.classList.add("mm-show"); 
             const parent5 = parent4.parentElement;
             if (parent5) {
-              parent5.classList.add("mm-show"); // li
-              parent5.childNodes[0].classList.add("mm-active"); // a tag
+              parent5.classList.add("mm-show"); 
+              parent5.childNodes[0].classList.add("mm-active"); 
             }
           }
         }
@@ -162,17 +159,7 @@ const SidebarContent = props => {
                 <i className="bx bxs-user-detail"></i>
                 <span>{props.t("Contacts")}</span>
               </Link>
-              {/* <ul className="sub-menu">
-                <li>
-                  <Link to="/contacts-grid">{props.t("User Grid")}</Link>
-                </li>
-                <li>
-                  <Link to="/contacts-list">{props.t("User List")}</Link>
-                </li>
-                <li>
-                  <Link to="/contacts-profile">{props.t("Profile")}</Link>
-                </li>
-              </ul> */}
+            
             </li>
 
             

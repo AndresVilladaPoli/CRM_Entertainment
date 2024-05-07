@@ -5,6 +5,7 @@ import Logout from "../pages/Authentication/Logout";
 import Register from "../pages/Authentication/Register";
 
 import Dashboard from "../pages/Dashboard/index";
+import ContactsList from "../pages/Contacts/ContactList/contacts-list";
 
 
 const authProtectedRoutes = [
@@ -14,6 +15,8 @@ const authProtectedRoutes = [
     exact: true,
     component: < Navigate to="/dashboard" />,
   },
+  { path: "/contacts-list", component: <ContactsList /> },
+
 ];
 const publicRoutes = [
   { path: "/logout", component: <Logout /> },

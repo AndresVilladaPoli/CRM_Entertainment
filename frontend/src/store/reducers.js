@@ -5,16 +5,18 @@ import Layout from "./layout/reducer";
 import Login from "./auth/login/reducer";
 import Register from "./auth/register/reducer";
 
+import contacts from "./contacts/reducer";
+
 import Dashboard from "./dashboard/reducer";
 
 
 
 const rootReducer = combineReducers({
-  // public
   Layout,
   Login,
   Register,
 
+  contacts,
   Dashboard,
  
 });
