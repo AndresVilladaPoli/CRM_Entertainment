@@ -20,7 +20,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Name, Email, Tags, Projects } from "./contactlistCol";
+import { Name, Address, Email, Telephone, } from "./contactlistCol";
 
 import Breadcrumbs from "components/Common/Breadcrumb";
 
@@ -44,20 +44,22 @@ const ContactsList = props => {
 
     initialValues: {
       name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
       email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
+      address: (contact && contact.address) || "",
+      telephone: (contact && contact.telephone) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
-      email: Yup.string().matches(
-        /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-        "Please Enter Valid Email"
-      ).required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
+      name: Yup.string().required("Please enter the contact's name"),
+      email: Yup.string()
+        .matches(
+          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+          "Please Enter Valid Email"
+        )
+        .required("Please enter the contact's email"),
+      adress: Yup.string().required("Please enter the contact's address"),
+      telephone: Yup.string()
+        .matches(/^\+(?:[0-9] ?){6,14}[0-9]$/, "Please Enter Valid Phone Number")
+        .required("Please enter the contact's telephone"),
     }),
     onSubmit: values => {
      
@@ -65,10 +67,9 @@ const ContactsList = props => {
         const newUser = {
           id: Math.floor(Math.random() * (30 - 20)) + 20,
           name: values["name"],
-          designation: values["designation"],
           email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
+          address: values["address"],
+          telephone: values["telephone"],
         };
         dispatch(onAddNewUser(newUser));
         validation.resetForm();
@@ -76,7 +77,6 @@ const ContactsList = props => {
       toggle();
     },
   });
-console.log("hola")
   const { users } = useSelector(state => ({
     users: state.contacts.users,
   }));
@@ -87,12 +87,7 @@ console.log("hola")
 
   const columns = useMemo(
     () => [
-      {
-        Header: "#",
-        Cell: () => {
-          return <input type="checkbox" className="form-check-input" />;
-        },
-      },
+
       {
         Header: "Img",
         disableFilters: true,
@@ -126,6 +121,14 @@ console.log("hola")
         },
       },
       {
+        Header: "Address",
+        accessor: "address",
+        filterable: true,
+        Cell: cellProps => {
+          return <Address {...cellProps} />;
+        },
+      },
+      {
         Header: "Email",
         accessor: "email",
         filterable: true,
@@ -133,25 +136,15 @@ console.log("hola")
           return <Email {...cellProps} />;
         },
       },
+      
       {
-        Header: "Tags",
-        accessor: "tags",
+        Header: "Telephone",
+        accessor: "telephone",
         filterable: true,
         Cell: cellProps => {
-          return <Tags {...cellProps} />;
-        },
-      },
-      {
-        Header: "Projects",
-        accessor: "projects",
-        filterable: true,
-        Cell: cellProps => {
-          return (
-            <>
-              {" "}
-              <Projects {...cellProps} />{" "}
-            </>
-          );
+          return <Telephone {...cellProps} />;
+            
+          
         },
       },
       
@@ -188,10 +181,9 @@ console.log("hola")
     setContact({
       id: user.id,
       name: user.name,
-      designation: user.designation,
+      address: user.address,
       email: user.email,
-      tags: user.tags,
-      projects: user.projects,
+      telephone: user.telephone,
     });
     setIsEdit(true);
 
@@ -211,7 +203,6 @@ console.log("hola")
     }
   };
 
-  //delete customer
 
 
 
@@ -228,7 +219,6 @@ console.log("hola")
     
       <div className="page-content">
         <Container fluid>
-          {/* Render Breadcrumbs */}
           <Breadcrumbs title="Contacts" breadcrumbItem="User List" />
           <Row>
             <Col lg="12">
@@ -282,26 +272,26 @@ console.log("hola")
                               ) : null}
                             </div>
                             <div className="mb-3">
-                              <Label className="form-label">Designation</Label>
+                              <Label className="form-label">Address</Label>
                               <Input
-                                name="designation"
-                                label="Designation"
-                                placeholder="Insert Designation"
+                                name="address"
+                                label="Address"
+                                placeholder="Insert Adress"
                                 type="text"
                                 onChange={validation.handleChange}
                                 onBlur={validation.handleBlur}
-                                value={validation.values.designation || ""}
+                                value={validation.values.address || ""}
                                 invalid={
-                                  validation.touched.designation &&
-                                    validation.errors.designation
+                                  validation.touched.address &&
+                                    validation.errors.address
                                     ? true
                                     : false
                                 }
                               />
-                              {validation.touched.designation &&
-                                validation.errors.designation ? (
+                              {validation.touched.address &&
+                                validation.errors.address ? (
                                 <FormFeedback type="invalid">
-                                  {validation.errors.designation}
+                                  {validation.errors.address}
                                 </FormFeedback>
                               ) : null}
                             </div>
@@ -329,61 +319,28 @@ console.log("hola")
                                 </FormFeedback>
                               ) : null}
                             </div>
+                              
                             <div className="mb-3">
-                              <Label className="form-label">Option</Label>
+                              <Label className="form-label">Telephone</Label>
                               <Input
-                                type="select"
-                                name="tags"
-                                className="form-select"
-                                multiple={true}
-                                onChange={validation.handleChange}
-                                onBlur={validation.handleBlur}
-                                value={validation.values.tags || []}
-                                invalid={
-                                  validation.touched.tags &&
-                                    validation.errors.tags
-                                    ? true
-                                    : false
-                                }
-                              >
-                                <option>Photoshop</option>
-                                <option>illustrator</option>
-                                <option>Html</option>
-                                <option>Php</option>
-                                <option>Java</option>
-                                <option>Python</option>
-                                <option>UI/UX Designer</option>
-                                <option>Ruby</option>
-                                <option>Css</option>
-                              </Input>
-                              {validation.touched.tags &&
-                                validation.errors.tags ? (
-                                <FormFeedback type="invalid">
-                                  {validation.errors.tags}
-                                </FormFeedback>
-                              ) : null}
-                            </div>
-                            <div className="mb-3">
-                              <Label className="form-label">Projects</Label>
-                              <Input
-                                name="projects"
-                                label="Projects"
+                                name="telephone"
+                                label="Telephone"
                                 type="text"
-                                placeholder="Insert Projects"
+                                placeholder="Insert Telephone"
                                 onChange={validation.handleChange}
                                 onBlur={validation.handleBlur}
-                                value={validation.values.projects || ""}
+                                value={validation.values.telephone || ""}
                                 invalid={
-                                  validation.touched.projects &&
-                                    validation.errors.projects
+                                  validation.touched.telephone &&
+                                    validation.errors.telephone
                                     ? true
                                     : false
                                 }
                               />
-                              {validation.touched.projects &&
-                                validation.errors.projects ? (
+                              {validation.touched.telephone &&
+                                validation.errors.telephone ? (
                                 <FormFeedback type="invalid">
-                                  {validation.errors.projects}
+                                  {validation.errors.telephone}
                                 </FormFeedback>
                               ) : null}
                             </div>
@@ -394,8 +351,9 @@ console.log("hola")
                             <div className="text-end">
                               <button
                                 type="submit"
-                                className="btn btn-success save-user"
-                              >
+                                className="btn  save-user"
+                                style={{backgroundColor: '#C9B7D2' , color:'#0A0B24'}}
+                                >
                                 Save
                               </button>
                             </div>

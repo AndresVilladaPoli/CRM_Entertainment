@@ -2,7 +2,6 @@
 
 [data-layout-mode="dark"] {
 
-    // Color system - Dark Mode only
     $gray-100: #212529;
     $gray-200: #2a3042;
     $gray-300: #32394e;
@@ -12,6 +11,8 @@
     $gray-700: #f6f6f6;
     $gray-800: #eff2f7;
     $gray-900: #f8f9fa;
+    $gray-900: #f8f9fa;
+
 
     $grays: (
         "100": $gray-100,

@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import PropTypes from "prop-types";
+import React, { Fragment } from "react"
+import PropTypes from "prop-types"
 import {
   useTable,
   useGlobalFilter,
@@ -8,23 +8,23 @@ import {
   useFilters,
   useExpanded,
   usePagination,
-} from "react-table";
-import { Table, Row, Col, Button, Input, CardBody } from "reactstrap";
-import { Filter, DefaultColumnFilter } from "./filters";
-import JobListGlobalFilter from "../../components/Common/GlobalSearchFilter";
+} from "react-table"
+import { Table, Row, Col, Button, Input, CardBody } from "reactstrap"
+import { Filter, DefaultColumnFilter } from "./filters"
+import JobListGlobalFilter from "../../components/Common/GlobalSearchFilter"
 
 // Define a default UI for filtering
 function GlobalFilter({
   preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter,
-  isJobListGlobalFilter
+  isJobListGlobalFilter,
 }) {
-  const count = preGlobalFilteredRows.length;
-  const [value, setValue] = React.useState(globalFilter);
+  const count = preGlobalFilteredRows.length
+  const [value, setValue] = React.useState(globalFilter)
   const onChange = useAsyncDebounce(value => {
-    setGlobalFilter(value || undefined);
-  }, 200);
+    setGlobalFilter(value || undefined)
+  }, 200)
 
   return (
     <React.Fragment>
@@ -37,8 +37,8 @@ function GlobalFilter({
               </span>
               <input
                 onChange={e => {
-                  setValue(e.target.value);
-                  onChange(e.target.value);
+                  setValue(e.target.value)
+                  onChange(e.target.value)
                 }}
                 id="search-bar-0"
                 type="text"
@@ -50,14 +50,10 @@ function GlobalFilter({
             <i className="bx bx-search-alt search-icon"></i>
           </div>
         </div>
-
       </Col>
-      {isJobListGlobalFilter && (
-        <JobListGlobalFilter />
-      )}
-
+      {isJobListGlobalFilter && <JobListGlobalFilter />}
     </React.Fragment>
-  );
+  )
 }
 
 const TableContainer = ({
@@ -74,7 +70,6 @@ const TableContainer = ({
   customPageSize,
   className,
   customPageSizeOptions,
-
 }) => {
   const {
     getTableProps,
@@ -114,23 +109,23 @@ const TableContainer = ({
     useSortBy,
     useExpanded,
     usePagination
-  );
+  )
 
   const generateSortingIndicator = column => {
-    return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : "";
-  };
+    return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""
+  }
 
   const onChangeInSelect = event => {
-    setPageSize(Number(event.target.value));
-  };
+    setPageSize(Number(event.target.value))
+  }
 
   const onChangeInInput = event => {
-    const page = event.target.value ? Number(event.target.value) - 1 : 0;
-    gotoPage(page);
-  };
+    const page = event.target.value ? Number(event.target.value) - 1 : 0
+    gotoPage(page)
+  }
   return (
     <Fragment>
-      <Row className="mb-2">
+      <Row className="mb-2" >
         <Col md={customPageSizeOptions ? 2 : 1}>
           <select
             className="form-select"
@@ -172,9 +167,9 @@ const TableContainer = ({
             <div className="text-sm-end">
               <Button
                 type="button"
-                color="primary"
                 className="btn mb-2 me-2"
                 onClick={handleUserClick}
+                style={{ backgroundColor: "#721E81", color: "white" }}
               >
                 <i className="mdi mdi-plus-circle-outline me-1" />
                 Create New User
@@ -192,18 +187,17 @@ const TableContainer = ({
                 onClick={handleCustomerClick}
               >
                 <i className="mdi mdi-plus me-1" />
-                New Customers
               </Button>
             </div>
           </Col>
         )}
       </Row>
 
-      <div className="table-responsive react-table">
-        <Table bordered hover {...getTableProps()} className={className}>
-          <thead className="table-light table-nowrap">
+      <div className="table-responsive react-table" >
+        <Table bordered hover {...getTableProps()} className={className} >
+          <thead className="table-light table-nowrap" >
             {headerGroups.map(headerGroup => (
-              <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
+              <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()} >
                 {headerGroup.headers.map(column => (
                   <th key={column.id}>
                     <div className="mb-2" {...column.getSortByToggleProps()}>
@@ -219,7 +213,7 @@ const TableContainer = ({
 
           <tbody {...getTableBodyProps()}>
             {page.map(row => {
-              prepareRow(row);
+              prepareRow(row)
               return (
                 <Fragment key={row.getRowProps().key}>
                   <tr>
@@ -228,11 +222,11 @@ const TableContainer = ({
                         <td key={cell.id} {...cell.getCellProps()}>
                           {cell.render("Cell")}
                         </td>
-                      );
+                      )
                     })}
                   </tr>
                 </Fragment>
-              );
+              )
             })}
           </tbody>
         </Table>
@@ -242,16 +236,16 @@ const TableContainer = ({
         <Col className="col-md-auto">
           <div className="d-flex gap-1">
             <Button
-              color="primary"
+              style={{ backgroundColor: "#774D7E", color: "white" }}
               onClick={() => gotoPage(0)}
               disabled={!canPreviousPage}
             >
               {"<<"}
             </Button>
             <Button
-              color="primary"
               onClick={previousPage}
               disabled={!canPreviousPage}
+              style={{ backgroundColor: "#774D7E", color: "white" }}
             >
               {"<"}
             </Button>
@@ -276,11 +270,15 @@ const TableContainer = ({
 
         <Col className="col-md-auto">
           <div className="d-flex gap-1">
-            <Button color="primary" onClick={nextPage} disabled={!canNextPage}>
+            <Button
+              style={{ backgroundColor: "#774D7E", color: "white" }}
+              onClick={nextPage}
+              disabled={!canNextPage}
+            >
               {">"}
             </Button>
             <Button
-              color="primary"
+              style={{ backgroundColor: "#774D7E", color: "white" }}
               onClick={() => gotoPage(pageCount - 1)}
               disabled={!canNextPage}
             >
@@ -290,11 +288,11 @@ const TableContainer = ({
         </Col>
       </Row>
     </Fragment>
-  );
-};
+  )
+}
 
 TableContainer.propTypes = {
   preGlobalFilteredRows: PropTypes.any,
-};
+}
 
-export default TableContainer;
+export default TableContainer
