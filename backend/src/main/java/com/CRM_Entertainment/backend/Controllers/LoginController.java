@@ -1,4 +1,4 @@
-package com.CRM_Entertainment.backend.Controllers;
+/*package com.CRM_Entertainment.backend.Controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +52,5 @@ public class LoginController {
             this.password = password;
         }
     }
-}
+}*/
 

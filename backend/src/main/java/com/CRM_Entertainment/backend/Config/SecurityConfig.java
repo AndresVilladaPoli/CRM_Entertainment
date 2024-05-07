@@ -1,4 +1,4 @@
-package com.CRM_Entertainment.backend.Config;
+/*package com.CRM_Entertainment.backend.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,4 +12,4 @@ public class SecurityConfig {
 
         return new BCryptPasswordEncoder();
     }
-}
+}*/
