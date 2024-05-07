@@ -1,6 +1,9 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
+import * as url from "../url_helper";
 
+import {  users as members,
+} from "../../common/data"
 
 let users = [
   {
@@ -36,6 +39,29 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onGet(url.GET_USERS).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (members) {
+          resolve([200, members]);
+        } else {
+          reject([400, "Cannot get users"]);
+        }
+      });
+    });
+  });
+
+  mock.onPost(url.ADD_NEW_USER).reply(user => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (user && user.data) {
+          resolve([200, user.data]);
+        } else {
+          reject([400, "Cannot add user"]);
+        }
+      });
+    });
+  });
   
 
 };

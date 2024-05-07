@@ -3,32 +3,26 @@ import React from "react";
 
 import { Row, Col, CardBody, Card, Alert, Container, Form, Input, FormFeedback, Label } from "reactstrap";
 
-//redux
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import withRouter from "components/Common/withRouter";
 
-// Formik validation
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
 
 
-// actions
 import { loginUser } from "../../store/actions";
 
-// import images
 import profile from "assets/images/logosp.png";
 
 const Login = props => {
 
-  //meta title
   document.title = "Login | SpectraSphere";
 
   const dispatch = useDispatch();
 
   const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
@@ -59,26 +53,35 @@ const Login = props => {
         </Link>
       </div>
       <div className="account-pages my-5 pt-sm-5">
-        <Container>
+        <Container >
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
-              <Card className="overflow-hidden">
+              <Card className="overflow-hidden" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }} >
                 <div style={{backgroundColor: '#C9B7D2' }}>
                   <Row>
                     
                     <Col xs={7}>
-                      <div className="text-primary p-4">
+                      <div className="text-primary p-4 mb-5">
                         <h5  style={{color:'#0A0B24', fontSize:'25px'}}>Welcome Back !</h5>
                         <p style={{color:'#0A0B24', fontSize:'15px'}}>Sign in to continue </p>
                       </div>
                     </Col>
-                    <Col className="col-5 align-self-end">
-                      <img src={profile}  height="152"/>
-                    </Col>
+                 
                   </Row>
                 </div>
-                <CardBody className="pt-0 shadow-lg" >
-                 
+                <CardBody className="pt-0" >
+                  <Link to="/">
+                        <span className="avatar-title-register rounded-circle ">
+                          <img
+                            src={profile}
+                            alt=""
+                            className="rounded-circle"
+                            height="150"
+                        
+                            
+                          />
+                        </span>
+                  </Link>
                   <div className="p-2" >
                     <Form
                       className="form-horizontal"

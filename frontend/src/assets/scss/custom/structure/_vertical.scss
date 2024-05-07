@@ -426,16 +426,13 @@ body[data-sidebar="dark"] {
       }
     }
   }
-  // Enlarge menu
   &.vertical-collpsed {
     min-height: $layout-collapsed-min-height;
 
-    // Side menu
     .vertical-menu {
       .navbar-brand-box {
         background-color: #6E6189; 
       }
-      // Sidebar Menu
       #sidebar-menu {
         > ul {
           > li {
@@ -596,7 +593,6 @@ body[data-sidebar-size="small"] {
     }
 }
 
-// colored sidebar
 
 body[data-sidebar="colored"],
 body[data-sidebar="winter"],
