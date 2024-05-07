@@ -19,41 +19,17 @@ const Name = (cell) => {
     return cell.value ? cell.value : '';
 };
 
+const Address = (cell) => {
+    return cell.value ? cell.value : '';
+};
+
 const Email = (cell) => {
     return cell.value ? cell.value : '';
 };
 
-const Tags = (cell) => {
-    return (
-        <>
-            {map(
-                cell.value,
-                (tag, index) =>
-                    index < 2 && (
-                        <Link
-                            to="#"
-                            className="badge badge-soft-primary font-size-11 m-1"
-                            key={"_skill_" + cell.value + index}
-                        >
-                            {tag}
-                        </Link>
 
-                    )
-            )}
-            {size(cell.value) > 2 && (
-                <Link
-                    to="#"
-                    className="badge badge-soft-primary font-size-11 m-1"
-                    key={"_skill_" + cell.value}
-                >
-                    {size(cell.value) - 1} + more
-                </Link>
-            )}
-        </>
-    );
-};
 
-const Projects = (cell) => {
+const Telephone = (cell) => {
     return cell.value ? cell.value : '';
 };
 
@@ -81,8 +57,8 @@ const Img = (cell) => {
 
 export {
     Name,
+    Address,
     Email,
-    Tags,
-    Projects,
+    Telephone,
     Img
 };
