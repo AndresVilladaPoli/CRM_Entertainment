@@ -3,3 +3,5 @@
 export const POST_FAKE_LOGIN = "/post-fake-login";
 export const GET_USERS = "/users";
 export const ADD_NEW_USER = "/add/user";
+export const UPDATE_USER = "/update/user";
+export const DELETE_USER = "/delete/user";

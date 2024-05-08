@@ -20,6 +20,10 @@ export const getUsers = () => get(url.GET_USERS);
 
 export const addNewUser = user => post(url.ADD_NEW_USER, user);
 
+export const updateUser = user => put(url.UPDATE_USER, user);
+
+export const deleteUser = user => del(url.DELETE_USER, { headers: { user } });
+
 export {
   getLoggedInUser,
   isUserAuthenticated,
