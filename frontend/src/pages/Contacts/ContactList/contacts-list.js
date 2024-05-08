@@ -23,18 +23,19 @@ import { useFormik } from "formik";
 import { Name, Address, Email, Telephone, } from "./contactlistCol";
 
 import Breadcrumbs from "components/Common/Breadcrumb";
+import DeleteModal from "components/Common/DeleteModal";
 
 import {
   getUsers as onGetUsers,
   addNewUser as onAddNewUser,
-
+  updateUser as onUpdateUser,
+  deleteUser as onDeleteUser,
 } from "store/contacts/actions";
 import { isEmpty } from "lodash";
 
 import { useSelector, useDispatch } from "react-redux";
 
 const ContactsList = props => {
-
   document.title = "Contacts | SpectraSphere";
 
   const dispatch = useDispatch();
@@ -56,13 +57,25 @@ const ContactsList = props => {
           "Please Enter Valid Email"
         )
         .required("Please enter the contact's email"),
-      address: Yup.string().required("Please enter the contact's address"),
+      adress: Yup.string().required("Please enter the contact's address"),
       telephone: Yup.string()
         .matches(/^\+(?:[0-9] ?){6,14}[0-9]$/, "Please Enter Valid Phone Number")
         .required("Please enter the contact's telephone"),
     }),
-    onSubmit: (values) => {
-     
+    onSubmit: values => {
+      if (isEdit) {
+        const updateUser = {
+          id: contact.id,
+          name: values.name,
+          email: values.email,
+          address: values.address,
+          telephone: values.telephone,
+        };
+
+        dispatch(onUpdateUser(updateUser));
+        setIsEdit(false);
+        validation.resetForm();
+      } else {
       
         const newUser = {
           id: Math.floor(Math.random() * (30 - 20)) + 20,
@@ -73,7 +86,7 @@ const ContactsList = props => {
         };
         dispatch(onAddNewUser(newUser));
         validation.resetForm();
-      
+      }
       toggle();
     },
   });
@@ -147,6 +160,41 @@ const ContactsList = props => {
           
         },
       },
+      {
+        Header: "Action",
+        Cell: cellProps => {
+          return (
+            <div className="d-flex gap-3">
+              <Link
+                to="#"
+                className="text-success"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  handleUserClick(userData);
+                }}
+              >
+                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
+                <UncontrolledTooltip placement="top" target="edittooltip">
+                  Edit
+                </UncontrolledTooltip>
+              </Link>
+              <Link
+                to="#"
+                className="text-danger"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  onClickDelete(userData);
+                }}
+              >
+                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
+                <UncontrolledTooltip placement="top" target="deletetooltip">
+                  Delete
+                </UncontrolledTooltip>
+              </Link>
+            </div>
+          );
+        },
+      },
       
     ],
     []
@@ -203,7 +251,20 @@ const ContactsList = props => {
     }
   };
 
+  const [deleteModal, setDeleteModal] = useState(false);
 
+  const onClickDelete = users => {
+    setContact(users);
+    setDeleteModal(true);
+  };
+
+  const handleDeleteUser = () => {
+    if (contact && contact.id) {
+      dispatch(onDeleteUser(contact.id));
+    }
+    onPaginationPageChange(1);
+    setDeleteModal(false);
+  };
 
 
   const handleUserClicks = () => {
@@ -216,7 +277,11 @@ const ContactsList = props => {
 
   return (
     <React.Fragment>
-    
+          <DeleteModal
+        show={deleteModal}
+        onDeleteClick={handleDeleteUser}
+        onCloseClick={() => setDeleteModal(false)}
+      />
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs title="Contacts" breadcrumbItem="User List" />
@@ -355,9 +420,7 @@ const ContactsList = props => {
                                 style={{backgroundColor: '#C9B7D2' , color:'#0A0B24'}}
                                 >
                                 Save
-                                
                               </button>
-                            
                             </div>
                           </Col>
                         </Row>

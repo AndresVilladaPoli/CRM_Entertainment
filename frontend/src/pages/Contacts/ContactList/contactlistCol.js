@@ -55,6 +55,8 @@ const Img = (cell) => {
     );
 };
 
+
+
 export {
     Name,
     Address,
