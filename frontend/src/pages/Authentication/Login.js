@@ -66,19 +66,7 @@ const Login = props => {
                         <p style={{color:'#0A0B24', fontSize:'15px'}}>Sign in to continue </p>
                       </div> 
                     </Col>
-{/*                     
-                    <Link to="/">
-                        <span className="avatar-title-register rounded-circle ">
-                          <img
-                            src={profile}
-                            alt=""
-                            className="rounded-circle"
-                            height="150"
-                        
-                            
-                          />
-                        </span>
-                  </Link> */}
+
                   <Col className="col-5 align-self-end">
                       <img src={profile}  height="150" style={{marginBottom:'15px'}}/>
                     </Col>
@@ -87,7 +75,7 @@ const Login = props => {
                 </div>
                 
                 
-                <CardBody className="pt-0" style={{ height: '300px', marginTop:'50px' }} >
+                <CardBody className="pt-0" style={{ marginTop:'50px' }} >
                   
                   <div className="p-2" >
                     <Form
@@ -178,7 +166,7 @@ const Login = props => {
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Created 
+                  © {new Date().getFullYear()} Created with {" "}
                   <i className="mdi mdi-heart text-danger" /> by Andrea, Dayron, Mateo & Andrés
                 </p>
               </div>
