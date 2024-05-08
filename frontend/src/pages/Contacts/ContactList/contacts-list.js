@@ -58,11 +58,12 @@ const ContactsList = props => {
           "Please Enter Valid Email"
         )
         .required("Please enter the contact's email"),
-      adress: Yup.string().required("Please enter the contact's address"),
+      address: Yup.string().required("Please enter the contact's address"),
       telephone: Yup.string()
         .matches(/^\+(?:[0-9] ?){6,14}[0-9]$/, "Please Enter Valid Phone Number")
         .required("Please enter the contact's telephone"),
     }),
+<<<<<<< HEAD
     onSubmit: values => {
       if (isEdit) {
         const updateUser = {
@@ -77,6 +78,10 @@ const ContactsList = props => {
         setIsEdit(false);
         validation.resetForm();
       } else {
+=======
+    onSubmit: (values) => {
+     
+>>>>>>> c68fb98c4bcba4a4841f34cdb6954ece8cab12f4
       
         const newUser = {
           id: Math.floor(Math.random() * (30 - 20)) + 20,
@@ -421,7 +426,9 @@ const ContactsList = props => {
                                 style={{backgroundColor: '#C9B7D2' , color:'#0A0B24'}}
                                 >
                                 Save
+                                
                               </button>
+                            
                             </div>
                           </Col>
                         </Row>
