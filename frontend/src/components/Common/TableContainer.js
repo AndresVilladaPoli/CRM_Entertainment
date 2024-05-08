@@ -199,7 +199,7 @@ const TableContainer = ({
             {headerGroups.map(headerGroup => (
               <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()} >
                 {headerGroup.headers.map(column => (
-                  <th key={column.id}>
+                  <th key={column.id} style={{backgroundColor: '#E8E0E9'}}>
                     <div className="mb-2" {...column.getSortByToggleProps()}>
                       {column.render("Header")}
                       {generateSortingIndicator(column)}

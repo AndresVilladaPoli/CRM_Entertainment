@@ -78,7 +78,6 @@
   }
 }
 
-// radio
 
 .form-radio-outline {
   .form-check-input {
@@ -112,7 +111,6 @@
 
 
 
-// checkbox color
 
 @each $color,
 $value in $theme-colors {
@@ -146,7 +144,6 @@ $value in $theme-colors {
   margin-bottom: 0;
 }
 
-// Switch sizes
 
 .form-switch-md {
   padding-left: 2.5rem;
@@ -183,7 +180,6 @@ $value in $theme-colors {
   margin-bottom: 0px;
 }
 
-// transfer list
 
 .rdl-filter,
 .rdl-control {
