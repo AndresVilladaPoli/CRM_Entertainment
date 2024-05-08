@@ -62,7 +62,31 @@ const fakeBackend = () => {
       });
     });
   });
-  
+
+  mock.onPut(url.UPDATE_USER).reply(user => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (user && user.data) {
+          resolve([200, user.data]);
+        } else {
+          reject([400, "Cannot update user"]);
+        }
+      });
+    });
+  });
+
+  mock.onDelete(url.DELETE_USER).reply(config => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (config && config.headers) {
+          resolve([200, config.headers.user]);
+        } else {
+          reject([400, "Cannot delete user"]);
+        }
+      });
+    });
+  });
+
 
 };
 
