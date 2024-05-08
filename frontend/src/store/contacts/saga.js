@@ -18,7 +18,6 @@ import { getUsers,  addNewUser, updateUser, deleteUser } from "../../helpers/fak
 function* fetchUsers() {
   try {
     const response = yield call(getUsers)
-    console.log(response)
     yield put(getUsersSuccess(response))
   } catch (error) {
     yield put(getUsersFail(error))
@@ -47,6 +46,7 @@ function* onUpdateUser({ payload: user }) {
 }
 
 function* onDeleteUser({ payload: user }) {
+ 
   try {
     const response = yield call(deleteUser, user)
     yield put(deleteUserSuccess(response))
