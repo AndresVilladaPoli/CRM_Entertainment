@@ -64,13 +64,10 @@ const Login = props => {
                       <div className="text-primary p-4 mb-5">
                         <h5  style={{color:'#0A0B24', fontSize:'25px'}}>Welcome Back !</h5>
                         <p style={{color:'#0A0B24', fontSize:'15px'}}>Sign in to continue </p>
-                      </div>
+                      </div> 
                     </Col>
-                 
-                  </Row>
-                </div>
-                <CardBody className="pt-0" >
-                  <Link to="/">
+{/*                     
+                    <Link to="/">
                         <span className="avatar-title-register rounded-circle ">
                           <img
                             src={profile}
@@ -81,7 +78,17 @@ const Login = props => {
                             
                           />
                         </span>
-                  </Link>
+                  </Link> */}
+                  <Col className="col-5 align-self-end">
+                      <img src={profile}  height="150" style={{marginBottom:'15px'}}/>
+                    </Col>
+                  </Row>
+                  
+                </div>
+                
+                
+                <CardBody className="pt-0" style={{ height: '300px', marginTop:'50px' }} >
+                  
                   <div className="p-2" >
                     <Form
                       className="form-horizontal"
@@ -130,15 +137,17 @@ const Login = props => {
                         ) : null}
                       </div>
 
-                      <div className="form-check">
+                      <div className="form-check " >
                         <input
                           type="checkbox"
                           className="form-check-input"
-                          id="customControlInline"
+                          id="customControlInline" 
+                          
                         />
                         <label
                           className="form-check-label"
                           htmlFor="customControlInline"
+                          
                         >
                           Remember me
                         </label>
@@ -146,7 +155,7 @@ const Login = props => {
 
                       <div className="mt-3 d-grid">
                         <button
-                          className="btn btn-primary btn-block"
+                          className="btn  btn-block"
                           type="submit"
                           style={{backgroundColor: '#C9B7D2' , color:'#0A0B24'}}
                         >
