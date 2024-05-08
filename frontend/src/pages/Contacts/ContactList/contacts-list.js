@@ -56,12 +56,12 @@ const ContactsList = props => {
           "Please Enter Valid Email"
         )
         .required("Please enter the contact's email"),
-      adress: Yup.string().required("Please enter the contact's address"),
+      address: Yup.string().required("Please enter the contact's address"),
       telephone: Yup.string()
         .matches(/^\+(?:[0-9] ?){6,14}[0-9]$/, "Please Enter Valid Phone Number")
         .required("Please enter the contact's telephone"),
     }),
-    onSubmit: values => {
+    onSubmit: (values) => {
      
       
         const newUser = {
@@ -355,7 +355,9 @@ const ContactsList = props => {
                                 style={{backgroundColor: '#C9B7D2' , color:'#0A0B24'}}
                                 >
                                 Save
+                                
                               </button>
+                            
                             </div>
                           </Col>
                         </Row>

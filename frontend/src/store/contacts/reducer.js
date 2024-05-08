@@ -39,8 +39,8 @@ const contacts = (state = INIT_STATE, action) => {
         error: action.payload,
       }
 
-      default:
-        return state;
+    default:
+      return state;
   }
 }
 
