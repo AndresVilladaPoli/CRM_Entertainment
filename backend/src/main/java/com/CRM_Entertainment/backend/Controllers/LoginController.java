@@ -1,56 +1,37 @@
-/*package com.CRM_Entertainment.backend.Controllers;
+package com.CRM_Entertainment.backend.Controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
+import com.CRM_Entertainment.backend.Models.DAO.IUserDao;
+import com.CRM_Entertainment.backend.Models.Dto.LoginRequest;
+import com.CRM_Entertainment.backend.Models.Entity.User;
+
+
+
+@Controller
+@RequestMapping("/api/auth")
 public class LoginController {
 
-    private final AuthenticationManager authenticationManager;
+    @Autowired
+    private IUserDao userDao;
 
-    public LoginController(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginForm loginForm) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginForm.getEmail(), loginForm.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        return ResponseEntity.ok("Logged in successfully!");
-    }
-
-    static class LoginForm {
-        private String email;
-        private String password;
-
-        // Getters and setters
-
-        public String getEmail() {
-            return email;
+     @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        
+        User user = userDao.findByUsername(loginRequest.getUsernameOrEmail());
+        if (user == null) {
+            user = userDao.findByEmail(loginRequest.getUsernameOrEmail());
         }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
+        if (user != null && user.getPassword().equals(loginRequest.getPassword())) {
+            return ResponseEntity.ok("User logged in successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username, email, or password");
         }
     }
-}*/
-
+}
