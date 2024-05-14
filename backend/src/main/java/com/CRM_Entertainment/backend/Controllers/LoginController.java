@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.CRM_Entertainment.backend.Models.DAO.IUserDao;
 import com.CRM_Entertainment.backend.Models.Dto.LoginRequest;
@@ -15,7 +15,7 @@ import com.CRM_Entertainment.backend.Models.Entity.User;
 
 
 @Controller
-@RequestMapping("/api/auth")
+
 public class LoginController {
 
     @Autowired
