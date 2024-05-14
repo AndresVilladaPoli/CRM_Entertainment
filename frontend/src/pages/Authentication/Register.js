@@ -1,24 +1,25 @@
-import React from "react";
-import { useState } from "react";
-import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap";
+import React, { useState } from "react";
+import { Row, Col, CardBody, Card, Container, Input, Label, Form, FormFeedback } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { registerUser } from "store/auth/register/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import SuccessModal from "../../components/Common/SuccessModal";
+import TermsModal from "../../components/Common/TermsModal";
 
 import logosp from "../../assets/images/logosp.png";
 
 const Register = props => {
-
   document.title = "Register";
 
   const dispatch = useDispatch();
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
 
   const validation = useFormik({
     enableReinitialize: true,
-
     initialValues: {
       email: '',
       username: '',
@@ -29,76 +30,62 @@ const Register = props => {
       username: Yup.string().required("Please Enter Your Username"),
       password: Yup.string().required("Please Enter Your Password"),
     }),
-    onSubmit: (values) => {
-      if (termsAccepted) {
-        dispatch(registerUser(values));
-        alert("Register User Successfully");
-      } else {
-        alert("Please accept the terms and conditions.");
+    onSubmit: async (values) => {
+      if (!termsAccepted) {
+        setShowTermsModal(true);
+        return;
+      }
+      
+      try {
+        await dispatch(registerUser(values));
+        setShowSuccessModal(true);
+      } catch (error) {
+        console.error("Registration error:", error);
+
       }
     }
   });
 
-  const { user, registrationError, loading } = useSelector(state => ({
+  const { user, loading } = useSelector(state => ({
     user: state.Register.user,
-    registrationError: state.Register.registrationError,
     loading: state.Register.loading,
   }));
 
-
-
   return (
     <React.Fragment>
-
       <div className="account-pages my-5 pt-sm-5">
         <Container>
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
               <Card className="overflow-hidden">
-              <div style={{backgroundColor: '#C9B7D2' }}>
+                <div style={{ backgroundColor: '#C9B7D2' }}>
                   <Row>
                     <Col className="col-7">
                       <div className="text-primary p-4">
-                        <h5 style={{color:'#0A0B24', fontSize:'25px'}}>Free Register</h5>
-                        <p style={{color:'#0A0B24', fontSize:'15px'}}>Get your account now.</p>
+                        <h5 style={{ color: '#0A0B24', fontSize: '25px' }}>Free Register</h5>
+                        <p style={{ color: '#0A0B24', fontSize: '15px' }}>Get your account now.</p>
                       </div>
                     </Col>
-
                   </Row>
                 </div>
                 <CardBody className="pt-0">
                   <div>
-                      <div className="avatar-md profile-user-wid mb-4">
-                        <span className="avatar-title rounded-circle bg-light">
-                          <img
-                            src={logosp}
-                            alt=""
-                            className="rounded-circle"
-                            height="90"
-                          />
-                        </span>
-                      </div>
-
+                    <div className="avatar-md profile-user-wid mb-4">
+                      <span className="avatar-title rounded-circle bg-light">
+                        <img
+                          src={logosp}
+                          alt=""
+                          className="rounded-circle"
+                          height="90"
+                        />
+                      </span>
+                    </div>
                   </div>
                   <div className="p-2">
                     <Form
                       className="form-horizontal"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        validation.handleSubmit();
-                        return false;
-                      }}
+                      onSubmit={validation.handleSubmit}
                     >
-                      {user && user ? (
-                        <Alert color="success">
-                          Register User Successfully
-                        </Alert>
-                      ) : null}
-
-                      {registrationError && registrationError ? (
-                        <Alert color="danger">{registrationError}</Alert>
-                      ) : null}
-
                       <div className="mb-3">
                         <Label className="form-label">Email</Label>
                         <Input
@@ -110,13 +97,9 @@ const Register = props => {
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           value={validation.values.email || ""}
-                          invalid={
-                            validation.touched.email && validation.errors.email ? true : false
-                          }
+                          invalid={validation.touched.email && validation.errors.email}
                         />
-                        {validation.touched.email && validation.errors.email ? (
-                          <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
-                        ) : null}
+                        <FormFeedback>{validation.errors.email}</FormFeedback>
                       </div>
 
                       <div className="mb-3">
@@ -128,14 +111,11 @@ const Register = props => {
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           value={validation.values.username || ""}
-                          invalid={
-                            validation.touched.username && validation.errors.username ? true : false
-                          }
+                          invalid={validation.touched.username && validation.errors.username}
                         />
-                        {validation.touched.username && validation.errors.username ? (
-                          <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
-                        ) : null}
+                        <FormFeedback>{validation.errors.username}</FormFeedback>
                       </div>
+
                       <div className="mb-3">
                         <Label className="form-label">Password</Label>
                         <Input
@@ -145,13 +125,9 @@ const Register = props => {
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           value={validation.values.password || ""}
-                          invalid={
-                            validation.touched.password && validation.errors.password ? true : false
-                          }
+                          invalid={validation.touched.password && validation.errors.password}
                         />
-                        {validation.touched.password && validation.errors.password ? (
-                          <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
-                        ) : null}
+                        <FormFeedback>{validation.errors.password}</FormFeedback>
                       </div>
 
                       <div className="mb-3 form-check">
@@ -168,15 +144,15 @@ const Register = props => {
                       </div>
 
                       <div className="mt-3 d-grid">
-                      <button
+                        <button
                           className="btn btn-primary btn-block"
                           type="submit"
-                          style={{backgroundColor: '#C9B7D2' , color:'#0A0B24'}}
+                          style={{ backgroundColor: '#C9B7D2', color: '#0A0B24' }}
+                          disabled={loading}
                         >
-                          Register
+                          {loading ? 'Registering...' : 'Register'}
                         </button>
                       </div>
-
                     </Form>
                   </div>
                 </CardBody>
@@ -184,7 +160,7 @@ const Register = props => {
               <div className="mt-5 text-center">
                 <p>
                   Already have an account ?{" "}
-                  <Link to="/login" className="fw-medium " style={{color:'#8F6FA0', fontSize:'15px'}}>
+                  <Link to="/login" className="fw-medium " style={{ color: '#8F6FA0', fontSize: '15px' }}>
                     {" "}
                     Login
                   </Link>{" "}
@@ -197,6 +173,17 @@ const Register = props => {
           </Row>
         </Container>
       </div>
+
+      <SuccessModal show={showSuccessModal} onCloseClick={() => setShowSuccessModal(false)} />
+      <TermsModal
+        show={showTermsModal}
+        onCloseClick={() => setShowTermsModal(false)}
+        onAcceptTerms={() => {
+          setTermsAccepted(true);
+          setShowTermsModal(false);
+          validation.handleSubmit();
+        }}
+      />
     </React.Fragment>
   );
 };
