@@ -8,14 +8,17 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 
 @Repository
+@Transactional
 public class RegisterDaoImp implements IRegisterDao {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
+    
     public void saveUser(User user){
 
         entityManager.persist(user);
