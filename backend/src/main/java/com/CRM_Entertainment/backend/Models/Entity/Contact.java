@@ -12,7 +12,7 @@ public class Contact implements Serializable {
     @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long Id;
 
-    private String Name,Cellphone,Email,Direction,Password;
+    private String Name,Cellphone,Email,Direction;
 
     public Long getId() {
         return Id;
@@ -54,15 +54,6 @@ public class Contact implements Serializable {
         Direction = direction;
     }
 
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
-    }
-
-    
 }
 
     
