@@ -2,7 +2,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import * as url from "../url_helper";
 
-import {  users as members,
+import {  users as members, sales as members2
 } from "../../common/data"
 
 let users = [
@@ -87,6 +87,29 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onGet(url.GET_SALES).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (members2) {
+          resolve([200, members2]);
+        } else {
+          reject([400, "Cannot get sales"]);
+        }
+      });
+    });
+  });
+
+  mock.onPost(url.ADD_NEW_SALE).reply(sale => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (sale && sale.data) {
+          resolve([200, sale.data]);
+        } else {
+          reject([400, "Cannot add sale"]);
+        }
+      });
+    });
+  });
 
 };
 

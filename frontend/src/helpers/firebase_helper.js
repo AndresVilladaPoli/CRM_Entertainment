@@ -1,13 +1,12 @@
 import firebase from 'firebase/compat/app';
 
-// Add the Firebase products that you want to use
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 class FirebaseAuthBackend {
   constructor(firebaseConfig) {
     if (firebaseConfig) {
-      // Initialize Firebase
+
       firebase.initializeApp(firebaseConfig);
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
@@ -19,7 +18,6 @@ class FirebaseAuthBackend {
     }
   }
 
- 
  
  
   loginUser = (email, password) => {
@@ -87,9 +85,6 @@ const initFirebaseBackend = config => {
   return _fireBaseBackend;
 };
 
-/**
- * Returns the firebase backend
- */
 const getFirebaseBackend = () => {
   return _fireBaseBackend;
 };

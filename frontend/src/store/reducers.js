@@ -8,6 +8,7 @@ import Register from "./auth/register/reducer";
 import contacts from "./contacts/reducer";
 
 import Dashboard from "./dashboard/reducer";
+import saleshistory from "./saleshistory/reducer";
 
 
 
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   Register,
 
   contacts,
+  saleshistory,
   Dashboard,
  
 });

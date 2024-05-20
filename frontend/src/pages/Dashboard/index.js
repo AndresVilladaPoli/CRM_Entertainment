@@ -43,6 +43,15 @@ const Dashboard = props => {
               />
             </Col>
           </Row>
+          <Row>
+            <Col xl="6"  >
+              <MonthlyEarning
+                name="Sales History"
+                route="/sales-history"
+                
+              />
+            </Col>
+          </Row>
         </Container>
       </div>
     </React.Fragment>
