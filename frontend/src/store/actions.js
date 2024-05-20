@@ -4,8 +4,8 @@ export * from "./auth/login/actions";
 export * from "./auth/register/actions";
 
 export * from "./contacts/actions";
+export * from "./saleshistory/actions";
 
-//dashboard
 export * from "./dashboard/actions";
 
 

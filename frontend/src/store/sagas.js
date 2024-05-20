@@ -5,6 +5,7 @@ import LayoutSaga from "./layout/saga";
 import contactsSaga from "./contacts/saga";
 
 import dashboardSaga from "./dashboard/saga";
+import saleshistorySaga from "./saleshistory/saga";
 
 
 export default function* rootSaga() {
@@ -12,6 +13,7 @@ export default function* rootSaga() {
     fork(AuthSaga),
     fork(LayoutSaga),
     fork(contactsSaga),
+    fork(saleshistorySaga),
 
     fork(dashboardSaga),
    
