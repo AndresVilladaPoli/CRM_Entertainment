@@ -162,6 +162,14 @@ const SidebarContent = props => {
             
             </li>
 
+            <li>
+              <Link to="/sales-history" >
+                <i className="bx bxs-check-circle"></i>
+                <span>{props.t("Sales History")}</span>
+              </Link>
+            
+            </li>
+
             
           </ul>
         </div>

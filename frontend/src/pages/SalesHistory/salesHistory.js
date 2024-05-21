@@ -40,14 +40,21 @@ const salesHistoryList = props => {
 
     initialValues: {
       product: (salesHistory && salesHistory.product) || "",
-      price: (salesHistory && salesHistory.price) || "",
+      price: (salesHistory && salesHistory.price) || "$",
       date: (salesHistory && salesHistory.date) || "",
 
     },
     validationSchema: Yup.object({
-      product: Yup.string().required("Please enter the contact's name"),
-      price: Yup.string().required("Please enter the contact's address"),
-      date: Yup.string().required("Please enter the contact's address"),
+      product: Yup.string().required("Please enter the product name"),
+      price: Yup.string()
+      .matches(/^\$\d+$/, "The price must contain only numbers")
+      .required("Please enter the product price"),
+      date: Yup.string()
+      .matches(
+        /^(?:(?:19|20)\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/,
+        "The date must be in the format YYYY-MM-DD and valid"
+      )
+      .required("Please enter the contact's address"),
     }),
     onSubmit: (values) => {
       
@@ -187,7 +194,7 @@ const salesHistoryList = props => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <Breadcrumbs title="Sales History" breadcrumbItem="User List" />
+          <Breadcrumbs title="Sales History" breadcrumbItem="Sales History List" />
           <Row>
             <Col lg="12">
               <Card>
@@ -203,7 +210,7 @@ const salesHistoryList = props => {
                   />
                   <Modal isOpen={modal} toggle={toggle}>
                     <ModalHeader toggle={toggle} tag="h4">
-                      {!!isEdit ? "Edit User" : "Add User"}
+                      {!!isEdit ? "Edit User" : "Add Sale History"}
                     </ModalHeader>
                     <ModalBody>
                       <Form
@@ -220,7 +227,7 @@ const salesHistoryList = props => {
                               <Input
                                 name="product"
                                 type="text"
-                                placeholder="Insert Name"
+                                placeholder="Insert Product"
                                 onChange={validation.handleChange}
                                 onBlur={validation.handleBlur}
                                 value={validation.values.product || ""}
@@ -242,7 +249,7 @@ const salesHistoryList = props => {
                               <Label className="form-label">Price</Label>
                               <Input
                                 name="price"
-                                label="Address"
+                                label="Price"
                                 placeholder="Insert Price"
                                 type="text"
                                 onChange={validation.handleChange}
