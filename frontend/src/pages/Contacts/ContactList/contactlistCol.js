@@ -32,6 +32,9 @@ const Email = (cell) => {
 const Telephone = (cell) => {
     return cell.value ? cell.value : '';
 };
+const Type = (cell) => {
+    return cell.value ? cell.value : '';
+};
 
 const Img = (cell) => {
     return (
@@ -62,5 +65,6 @@ export {
     Address,
     Email,
     Telephone,
+    Type,
     Img
 };

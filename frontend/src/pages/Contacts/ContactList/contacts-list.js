@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
-import { Link } from "react-router-dom";
-import withRouter from "components/Common/withRouter";
-import TableContainer from "../../../components/Common/TableContainer";
+import React, { useEffect, useState, useRef, useMemo } from "react"
+import { Link } from "react-router-dom"
+import withRouter from "components/Common/withRouter"
+import TableContainer from "../../../components/Common/TableContainer"
 import {
   Card,
   CardBody,
@@ -16,30 +16,30 @@ import {
   UncontrolledTooltip,
   Input,
   Form,
-} from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
+} from "reactstrap"
+import * as Yup from "yup"
+import { useFormik } from "formik"
 
-import { Name, Address, Email, Telephone, } from "./contactlistCol";
+import { Name, Address, Email, Telephone, Type } from "./contactlistCol"
 
-import Breadcrumbs from "components/Common/Breadcrumb";
-import DeleteModal from "components/Common/DeleteModal";
+import Breadcrumbs from "components/Common/Breadcrumb"
+import DeleteModal from "components/Common/DeleteModal"
 
 import {
   getUsers as onGetUsers,
   addNewUser as onAddNewUser,
   updateUser as onUpdateUser,
   deleteUser as onDeleteUser,
-} from "store/contacts/actions";
-import { isEmpty } from "lodash";
+} from "store/contacts/actions"
+import { isEmpty } from "lodash"
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux"
 
 const ContactsList = props => {
-  document.title = "Contacts | SpectraSphere";
+  document.title = "Contacts | SpectraSphere"
 
-  const dispatch = useDispatch();
-  const [contact, setContact] = useState();
+  const dispatch = useDispatch()
+  const [contact, setContact] = useState()
   const validation = useFormik({
     enableReinitialize: true,
 
@@ -48,21 +48,24 @@ const ContactsList = props => {
       email: (contact && contact.email) || "",
       address: (contact && contact.address) || "",
       telephone: (contact && contact.telephone) || "",
+      type: (contact && contact.type) || "Client",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please enter the contact's name"),
       email: Yup.string()
-        .matches(
-          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-          "Please Enter Valid Email"
-        )
+        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
         .required("Please enter the contact's email"),
       address: Yup.string().required("Please enter the contact's address"),
       telephone: Yup.string()
-        .matches(/^\+(?:[0-9] ?){6,14}[0-9]$/, "Please Enter Valid Phone Number")
+        .matches(
+          /^\+(?:[0-9] ?){6,14}[0-9]$/,
+          "Please Enter Valid Phone Number"
+        )
         .required("Please enter the contact's telephone"),
     }),
-    onSubmit: (values) => {
+    type: Yup.string().required("Please select the contact's type"),
+
+    onSubmit: values => {
       if (isEdit) {
         const updateUser = {
           id: contact.id,
@@ -70,42 +73,42 @@ const ContactsList = props => {
           email: values.email,
           address: values.address,
           telephone: values.telephone,
-        };
+          type: values.type,
+        }
 
-        dispatch(onUpdateUser(updateUser));
-        setIsEdit(false);
-        validation.resetForm();
+        dispatch(onUpdateUser(updateUser))
+        setIsEdit(false)
+        validation.resetForm()
       } else {
-      
         const newUser = {
           id: Math.floor(Math.random() * (30 - 20)) + 20,
           name: values["name"],
           email: values["email"],
           address: values["address"],
           telephone: values["telephone"],
-        };
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
+          type: values["type"],
+        }
+        dispatch(onAddNewUser(newUser))
+        validation.resetForm()
       }
-      toggle();
+      toggle()
     },
-  });
+  })
   const { users } = useSelector(state => ({
     users: state.contacts.users,
-  }));
+  }))
 
-  const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+  const [userList, setUserList] = useState([])
+  const [modal, setModal] = useState(false)
+  const [isEdit, setIsEdit] = useState(false)
 
   const columns = useMemo(
     () => [
-
       {
         Header: "Img",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
+        accessor: cellProps => (
           <>
             {!cellProps.img ? (
               <div className="avatar-xs">
@@ -130,7 +133,7 @@ const ContactsList = props => {
         accessor: "name",
         filterable: true,
         Cell: cellProps => {
-          return <Name {...cellProps} />;
+          return <Name {...cellProps} />
         },
       },
       {
@@ -138,7 +141,7 @@ const ContactsList = props => {
         accessor: "address",
         filterable: true,
         Cell: cellProps => {
-          return <Address {...cellProps} />;
+          return <Address {...cellProps} />
         },
       },
       {
@@ -146,18 +149,24 @@ const ContactsList = props => {
         accessor: "email",
         filterable: true,
         Cell: cellProps => {
-          return <Email {...cellProps} />;
+          return <Email {...cellProps} />
         },
       },
-      
+
       {
         Header: "Telephone",
         accessor: "telephone",
         filterable: true,
         Cell: cellProps => {
-          return <Telephone {...cellProps} />;
-            
-          
+          return <Telephone {...cellProps} />
+        },
+      },
+      {
+        Header: "Type",
+        accessor: "type",
+        filterable: true,
+        Cell: cellProps => {
+          return <Type {...cellProps} />
         },
       },
       {
@@ -169,8 +178,8 @@ const ContactsList = props => {
                 to="#"
                 className="text-success"
                 onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
+                  const userData = cellProps.row.original
+                  handleUserClick(userData)
                 }}
               >
                 <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
@@ -182,8 +191,8 @@ const ContactsList = props => {
                 to="#"
                 className="text-danger"
                 onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
+                  const userData = cellProps.row.original
+                  onClickDelete(userData)
                 }}
               >
                 <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
@@ -192,39 +201,38 @@ const ContactsList = props => {
                 </UncontrolledTooltip>
               </Link>
             </div>
-          );
+          )
         },
       },
-      
     ],
     []
-  );
+  )
 
   useEffect(() => {
     if (users && !users.length) {
-      dispatch(onGetUsers());
-      setIsEdit(false);
+      dispatch(onGetUsers())
+      setIsEdit(false)
     }
-  }, [dispatch, users]);
+  }, [dispatch, users])
 
   useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+    setContact(users)
+    setIsEdit(false)
+  }, [users])
 
   useEffect(() => {
     if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
+      setContact(users)
+      setIsEdit(false)
     }
-  }, [users]);
+  }, [users])
 
   const toggle = () => {
-    setModal(!modal);
-  };
+    setModal(!modal)
+  }
 
   const handleUserClick = arg => {
-    const user = arg;
+    const user = arg
 
     setContact({
       id: user.id,
@@ -232,13 +240,14 @@ const ContactsList = props => {
       address: user.address,
       email: user.email,
       telephone: user.telephone,
-    });
-    setIsEdit(true);
+      type: user.type,
+    })
+    setIsEdit(true)
 
-    toggle();
-  };
+    toggle()
+  }
 
-  var node = useRef();
+  var node = useRef()
   const onPaginationPageChange = page => {
     if (
       node &&
@@ -247,37 +256,36 @@ const ContactsList = props => {
       node.current.props.pagination &&
       node.current.props.pagination.options
     ) {
-      node.current.props.pagination.options.onPageChange(page);
+      node.current.props.pagination.options.onPageChange(page)
     }
-  };
+  }
 
-  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false)
 
   const onClickDelete = users => {
-    setContact(users);
-    setDeleteModal(true);
-  };
+    setContact(users)
+    setDeleteModal(true)
+  }
 
   const handleDeleteUser = () => {
     if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
+      dispatch(onDeleteUser(contact.id))
     }
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
+    onPaginationPageChange(1)
+    setDeleteModal(false)
+  }
 
   const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
+    setUserList("")
+    setIsEdit(false)
+    toggle()
+  }
 
-  const keyField = "id";
+  const keyField = "id"
 
   return (
     <React.Fragment>
-          <DeleteModal
+      <DeleteModal
         show={deleteModal}
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
@@ -306,9 +314,9 @@ const ContactsList = props => {
                     <ModalBody>
                       <Form
                         onSubmit={e => {
-                          e.preventDefault();
-                          validation.handleSubmit();
-                          return false;
+                          e.preventDefault()
+                          validation.handleSubmit()
+                          return false
                         }}
                       >
                         <Row>
@@ -324,13 +332,13 @@ const ContactsList = props => {
                                 value={validation.values.name || ""}
                                 invalid={
                                   validation.touched.name &&
-                                    validation.errors.name
+                                  validation.errors.name
                                     ? true
                                     : false
                                 }
                               />
                               {validation.touched.name &&
-                                validation.errors.name ? (
+                              validation.errors.name ? (
                                 <FormFeedback type="invalid">
                                   {validation.errors.name}
                                 </FormFeedback>
@@ -348,13 +356,13 @@ const ContactsList = props => {
                                 value={validation.values.address || ""}
                                 invalid={
                                   validation.touched.address &&
-                                    validation.errors.address
+                                  validation.errors.address
                                     ? true
                                     : false
                                 }
                               />
                               {validation.touched.address &&
-                                validation.errors.address ? (
+                              validation.errors.address ? (
                                 <FormFeedback type="invalid">
                                   {validation.errors.address}
                                 </FormFeedback>
@@ -372,19 +380,19 @@ const ContactsList = props => {
                                 value={validation.values.email || ""}
                                 invalid={
                                   validation.touched.email &&
-                                    validation.errors.email
+                                  validation.errors.email
                                     ? true
                                     : false
                                 }
                               />
                               {validation.touched.email &&
-                                validation.errors.email ? (
+                              validation.errors.email ? (
                                 <FormFeedback type="invalid">
                                   {validation.errors.email}
                                 </FormFeedback>
                               ) : null}
                             </div>
-                              
+
                             <div className="mb-3">
                               <Label className="form-label">Telephone</Label>
                               <Input
@@ -397,15 +405,42 @@ const ContactsList = props => {
                                 value={validation.values.telephone || ""}
                                 invalid={
                                   validation.touched.telephone &&
-                                    validation.errors.telephone
+                                  validation.errors.telephone
                                     ? true
                                     : false
                                 }
                               />
                               {validation.touched.telephone &&
-                                validation.errors.telephone ? (
+                              validation.errors.telephone ? (
                                 <FormFeedback type="invalid">
                                   {validation.errors.telephone}
+                                </FormFeedback>
+                              ) : null}
+                            </div>
+                            <div className="mb-3">
+                              <Label className="form-label">Type</Label>
+                              <Input
+                                type="select"
+                                name="type"
+                                onChange={validation.handleChange}
+                                onBlur={validation.handleBlur}
+                                value={validation.values.type || ""}
+                                invalid={
+                                  validation.touched.type &&
+                                  validation.errors.type
+                                    ? true
+                                    : false
+                                }
+                              >
+                                <option value="Client">Client</option>
+                                <option value="Provider">Provider</option>
+                                <option value="Employee">Employee</option>
+                                <option value="Partner">Partner</option>
+                              </Input>
+                              {validation.touched.type &&
+                              validation.errors.type ? (
+                                <FormFeedback type="invalid">
+                                  {validation.errors.type}
                                 </FormFeedback>
                               ) : null}
                             </div>
@@ -417,8 +452,11 @@ const ContactsList = props => {
                               <button
                                 type="submit"
                                 className="btn  save-user"
-                                style={{backgroundColor: '#C9B7D2' , color:'#0A0B24'}}
-                                >
+                                style={{
+                                  backgroundColor: "#C9B7D2",
+                                  color: "#0A0B24",
+                                }}
+                              >
                                 Save
                               </button>
                             </div>
@@ -434,7 +472,7 @@ const ContactsList = props => {
         </Container>
       </div>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default withRouter(ContactsList);
+export default withRouter(ContactsList)

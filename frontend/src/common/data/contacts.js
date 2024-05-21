@@ -12,6 +12,7 @@ const users = [
     address: "Transversal #8a",
     email: "david@spectrasphere.com",
     telephone: "+54 3493453",
+    type: "Client",
   },
   {
     id: 2,
@@ -19,6 +20,8 @@ const users = [
     address: "Cra 82-32",
     email: "ana@spectrasphere.com",
     telephone: "+435 4533534",
+    type: "Provider",
+
   },
   {
     id: 3,
@@ -26,6 +29,8 @@ const users = [
     address: "Diagonal 34b",
     email: "lorenzo@spectrasphere.com",
     telephone: "+57 3435345",
+    type: "Partner",
+
   },
   {
     id: 4,
@@ -33,6 +38,8 @@ const users = [
     address: "Baker st 343",
     email: "elkin@spectrasphere.com",
     telephone: "+78 63553",
+    type: "Employee",
+
   },
   {
     id: 5,
@@ -40,6 +47,8 @@ const users = [
     address: "Av 43 st ",
     email: "maritza@spectrasphere.com",
     telephone: "+33 545645",
+    type: "Client",
+
   },
   {
     id: 6,
@@ -47,6 +56,8 @@ const users = [
     address: "Dg 53 st",
     email: "gilbert@spectrasphere.com",
     telephone: "+87 456546",
+    type: "Provider",
+
   },
   {
     id: 7,
@@ -54,6 +65,8 @@ const users = [
     address: "Ch st 34 b",
     email: "elena@spectrasphere.com",
     telephone: "+1 5453453",
+    type: "Employee",
+
   },
   {
     id: 8,
@@ -61,6 +74,8 @@ const users = [
     address: "221B bk st",
     email: "bob@spectrasphere.com",
     telephone: "+1 45645554",
+    type: "Client",
+
   },
 ]
 

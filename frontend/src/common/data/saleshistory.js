@@ -12,7 +12,7 @@ const sales = [
     price: "$20",
     date: "2022-12-29",
     name: "Esteban",
-    state: "done"
+    state: "Done"
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const sales = [
     price: "$200",
     date: "2020-10-30",
     name: "Carlos",
-    state: "not done"
+    state: "Not Done"
   },
   {
     id: 3,
@@ -28,7 +28,7 @@ const sales = [
     price: "$150",
     date: "2024-02-12",
     name: "Luis",
-    state: "progress"
+    state: "Progress"
   },
   {
     id: 4,
@@ -36,7 +36,7 @@ const sales = [
     price: "$19",
     date: "2023-12-24",
     name: "Andrea",
-    state: "done"
+    state: "Done"
   },
   {
     id: 5,
@@ -44,7 +44,7 @@ const sales = [
     price: "$19",
     date: "2023-11-14",
     name: "Dayron",
-    state: "done"
+    state: "Done"
   },
   {
     id: 6,
@@ -52,7 +52,7 @@ const sales = [
     price: "$59",
     date: "2020-05-28",
     name: "Ana",
-    state: "progress"
+    state: "Progress"
   },
   {
     id: 7,
@@ -60,7 +60,7 @@ const sales = [
     price: "$199",
     date: "2024-05-19",
     name: "Juan",
-    state: "not done"
+    state: "Not Done"
   },
   {
     id: 8,
@@ -68,7 +68,7 @@ const sales = [
     price: "$250",
     date: "2023-12-31",
     name: "David",
-    state: "done"
+    state: "Done"
   },
 ]
 
