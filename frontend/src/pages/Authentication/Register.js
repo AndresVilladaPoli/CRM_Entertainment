@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, CardBody, Card, Container, Input, Label, Form, FormFeedback } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -10,20 +10,20 @@ import TermsModal from "../../components/Common/TermsModal";
 
 import logosp from "../../assets/images/logosp.png";
 
-const Register = props => {
+const Register = (props) => {
   document.title = "Register";
 
   const dispatch = useDispatch();
-  const [termsAccepted, setTermsAccepted] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
 
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      email: '',
-      username: '',
-      password: '',
+      email: "",
+      username: "",
+      password: "",
+      termsAccepted: false,
     },
     validationSchema: Yup.object({
       email: Yup.string().required("Please Enter Your Email"),
@@ -31,22 +31,28 @@ const Register = props => {
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: async (values) => {
-      if (!termsAccepted) {
+      if (!values.termsAccepted) {
         setShowTermsModal(true);
         return;
       }
-      
+
       try {
         await dispatch(registerUser(values));
         setShowSuccessModal(true);
       } catch (error) {
         console.error("Registration error:", error);
-
       }
-    }
+    },
   });
 
-  const { user, loading } = useSelector(state => ({
+  useEffect(() => {
+    validation.setValues((values) => ({
+      ...values,
+      termsAccepted: validation.values.termsAccepted,
+    }));
+  }, [validation.values.termsAccepted]);
+
+  const { user, loading } = useSelector((state) => ({
     user: state.Register.user,
     loading: state.Register.loading,
   }));
@@ -58,12 +64,12 @@ const Register = props => {
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
               <Card className="overflow-hidden">
-                <div style={{ backgroundColor: '#C9B7D2' }}>
+                <div style={{ backgroundColor: "#C9B7D2" }}>
                   <Row>
                     <Col className="col-7">
                       <div className="text-primary p-4">
-                        <h5 style={{ color: '#0A0B24', fontSize: '25px' }}>Free Register</h5>
-                        <p style={{ color: '#0A0B24', fontSize: '15px' }}>Get your account now.</p>
+                        <h5 style={{ color: "#0A0B24", fontSize: "25px" }}>Free Register</h5>
+                        <p style={{ color: "#0A0B24", fontSize: "15px" }}>Get your account now.</p>
                       </div>
                     </Col>
                   </Row>
@@ -72,20 +78,12 @@ const Register = props => {
                   <div>
                     <div className="avatar-md profile-user-wid mb-4">
                       <span className="avatar-title rounded-circle bg-light">
-                        <img
-                          src={logosp}
-                          alt=""
-                          className="rounded-circle"
-                          height="90"
-                        />
+                        <img src={logosp} alt="" className="rounded-circle" height="90" />
                       </span>
                     </div>
                   </div>
                   <div className="p-2">
-                    <Form
-                      className="form-horizontal"
-                      onSubmit={validation.handleSubmit}
-                    >
+                    <Form className="form-horizontal" onSubmit={validation.handleSubmit}>
                       <div className="mb-3">
                         <Label className="form-label">Email</Label>
                         <Input
@@ -134,8 +132,8 @@ const Register = props => {
                         <Input
                           type="checkbox"
                           id="termsAccepted"
-                          checked={termsAccepted}
-                          onChange={() => setTermsAccepted(!termsAccepted)}
+                          checked={validation.values.termsAccepted}
+                          onChange={validation.handleChange}
                           className="form-check-input"
                         />
                         <Label className="form-check-label" htmlFor="termsAccepted">
@@ -147,10 +145,10 @@ const Register = props => {
                         <button
                           className="btn btn-primary btn-block"
                           type="submit"
-                          style={{ backgroundColor: '#C9B7D2', color: '#0A0B24' }}
+                          style={{ backgroundColor: "#C9B7D2", color: "#0A0B24" }}
                           disabled={loading}
                         >
-                          {loading ? 'Registering...' : 'Register'}
+                          {loading ? "Registering..." : "Register"}
                         </button>
                       </div>
                     </Form>
@@ -160,14 +158,12 @@ const Register = props => {
               <div className="mt-5 text-center">
                 <p>
                   Already have an account ?{" "}
-                  <Link to="/login" className="fw-medium " style={{ color: '#8F6FA0', fontSize: '15px' }}>
+                  <Link to="/login" className="fw-medium " style={{ color: "#8F6FA0", fontSize: "15px" }}>
                     {" "}
                     Login
                   </Link>{" "}
                 </p>
-                <p>
-                  © {new Date().getFullYear()} Spectra Sphere.{" "}
-                </p>
+                <p>© {new Date().getFullYear()} Spectra Sphere. </p>
               </div>
             </Col>
           </Row>
@@ -179,7 +175,10 @@ const Register = props => {
         show={showTermsModal}
         onCloseClick={() => setShowTermsModal(false)}
         onAcceptTerms={() => {
-          setTermsAccepted(true);
+          validation.setValues((values) => ({
+            ...values,
+            termsAccepted: true,
+          }));
           setShowTermsModal(false);
           validation.handleSubmit();
         }}
