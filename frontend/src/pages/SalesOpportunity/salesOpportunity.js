@@ -69,8 +69,8 @@ const SalesOpportunityList = props => {
                     "The date must be in the format YYYY-MM-DD and valid"
                 )
                 .required("Please enter the contact's address"),
-            name: Yup.string().required("Please enter the product name"),
-            state: Yup.string().required("Please enter the product name"),
+            name: Yup.string().required("Please enter the client's name"),
+            state: Yup.string().required("Please select the sale state"),
         }),
         onSubmit: (values) => {
             const newSale = {
