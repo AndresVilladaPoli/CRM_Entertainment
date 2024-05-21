@@ -30,7 +30,6 @@ const State = (cell) => {
     return cell.value ? cell.value : '';
 };
 
-
 const Img = (cell) => {
     return (
         <>

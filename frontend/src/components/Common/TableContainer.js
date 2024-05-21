@@ -64,6 +64,7 @@ const TableContainer = ({
   isAddOptions,
   isAddUserList,
   isAddSaleList,
+  isAddSaleOppList,
   handleOrderClicks,
   handleUserClick,
   handleSaleClick,
@@ -180,7 +181,7 @@ const TableContainer = ({
           </Col>
         )}
 
-{isAddSaleList && (
+{isAddSaleOppList && (
           <Col sm="7">
             <div className="text-sm-end">
               <Button

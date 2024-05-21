@@ -170,7 +170,13 @@ const SidebarContent = props => {
             
             </li>
 
+            <li>
+              <Link to="/sales-opportunity" >
+                <i className="bx bx-list-check"></i>
+                <span>{props.t("Sales Opportunity")}</span>
+              </Link>
             
+            </li>
           </ul>
         </div>
       </SimpleBar>
