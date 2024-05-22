@@ -111,6 +111,18 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPut(url.UPDATE_SALE).reply(sale => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (sale && sale.data) {
+          resolve([200, sale.data]);
+        } else {
+          reject([400, "Cannot update sale"]);
+        }
+      });
+    });
+  });
+
 };
 
 export default fakeBackend;

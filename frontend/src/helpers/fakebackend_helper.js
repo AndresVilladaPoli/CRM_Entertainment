@@ -26,6 +26,9 @@ export const getSales = () => get(url.GET_SALES);
 
 export const addNewSale = sale => post(url.ADD_NEW_SALE, sale);
 
+export const updateSale = sale => put(url.UPDATE_SALE, sale);
+
+
 
 export {
   getLoggedInUser,
