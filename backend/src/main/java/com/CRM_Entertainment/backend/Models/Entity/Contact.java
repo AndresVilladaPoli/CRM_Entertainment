@@ -9,7 +9,6 @@ import jakarta.persistence.Table;
 public class Contact implements Serializable {
 
     @jakarta.persistence.Id
-    @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long Id;
 
     private String Name,Cellphone,Email,Direction, ContactType;
