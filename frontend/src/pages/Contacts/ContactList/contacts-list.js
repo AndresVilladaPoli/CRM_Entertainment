@@ -62,8 +62,9 @@ const ContactsList = props => {
           "Please Enter Valid Phone Number"
         )
         .required("Please enter the contact's telephone"),
+        type: Yup.string().required("Please select the contact's type"),
+
     }),
-    type: Yup.string().required("Please select the contact's type"),
 
     onSubmit: values => {
       if (isEdit) {

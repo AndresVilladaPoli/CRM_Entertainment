@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects"
-import { GET_SALES,  ADD_NEW_SALE } from "./actionTypes"
+import { GET_SALES,  ADD_NEW_SALE, UPDATE_SALE } from "./actionTypes"
 
 
 import {
@@ -7,10 +7,11 @@ import {
   getSalesFail,
   addSaleFail,
   addSaleSuccess,
-
+  updateSaleSuccess,
+  updateSaleFail
 } from "./actions"
 
-import { getSales,  addNewSale} from "../../helpers/fakebackend_helper"
+import { getSales,  addNewSale, updateSale} from "../../helpers/fakebackend_helper"
 
 function* fetchSales() {
   try {
@@ -33,9 +34,20 @@ function* onAddNewSale({ payload: sale }) {
   }
 }
 
+function* onUpdateSale({ payload: sale }) {
+  try {
+    const response = yield call(updateSale, sale)
+    yield put(updateSaleSuccess(response))
+  } catch (error) {
+    yield put(updateSaleFail(error))
+  }
+}
+
 function* saleshistorySaga() {
   yield takeEvery(GET_SALES, fetchSales)
   yield takeEvery(ADD_NEW_SALE, onAddNewSale)
+  yield takeEvery(UPDATE_SALE, onUpdateSale)
+
 
 }
 

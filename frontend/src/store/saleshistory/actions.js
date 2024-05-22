@@ -5,6 +5,9 @@ import {
   ADD_NEW_SALE,
   ADD_SALE_SUCCESS,
   ADD_SALE_FAIL,
+  UPDATE_SALE,
+  UPDATE_SALE_SUCCESS,
+  UPDATE_SALE_FAIL,
 
 } from "./actionTypes"
 
@@ -34,5 +37,20 @@ export const addSaleSuccess = sale => ({
 
 export const addSaleFail = error => ({
   type: ADD_SALE_FAIL,
+  payload: error,
+})
+
+export const updateSale = sale => ({
+  type: UPDATE_SALE,
+  payload: sale,
+})
+
+export const updateSaleSuccess = sale => ({
+  type: UPDATE_SALE_SUCCESS,
+  payload: sale,
+})
+
+export const updateSaleFail = error => ({
+  type: UPDATE_SALE_FAIL,
   payload: error,
 })

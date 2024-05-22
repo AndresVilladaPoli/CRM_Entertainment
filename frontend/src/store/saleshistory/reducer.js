@@ -3,6 +3,8 @@ import {
   GET_SALES_FAIL,
   ADD_SALE_SUCCESS,
   ADD_SALE_FAIL,
+  UPDATE_SALE_SUCCESS,
+  UPDATE_SALE_FAIL
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -37,6 +39,21 @@ const saleshistory = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       };
+      case UPDATE_SALE_SUCCESS:
+        return {
+          ...state,
+          sales: state.sales.map(sale =>
+            sale.id.toString() === action.payload.id.toString()
+              ? { sale, ...action.payload }
+              : sale
+          ),
+        }
+  
+      case UPDATE_SALE_FAIL:
+        return {
+          ...state,
+          error: action.payload,
+        }
 
     default:
       return state;
