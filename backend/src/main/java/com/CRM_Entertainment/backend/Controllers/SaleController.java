@@ -58,7 +58,9 @@ public class SaleController {
             return new ResponseEntity<>(new ErrorResponse("Sale not found"), HttpStatus.NOT_FOUND);
         }
         sale.setProduct(saleDetails.getProduct());
-        sale.setQuantity(saleDetails.getQuantity());
+        //sale.setQuantity(saleDetails.getQuantity());
+        sale.setName(saleDetails.getName());
+        sale.setState(saleDetails.getState());
         sale.setPrice(saleDetails.getPrice());
         sale.setDate(saleDetails.getDate());
         saleDao.save(sale);
