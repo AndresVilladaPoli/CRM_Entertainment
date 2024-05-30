@@ -2,6 +2,8 @@ package com.CRM_Entertainment.backend.Controllers;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,27 +25,45 @@ import com.CRM_Entertainment.backend.Models.DAO.IContactDao;
 //import com.CRM_Entertainment.backend.Models.DAO.ContactDaoImp;
 
 @Controller
+@RequestMapping("/contact")
 public class ContactController{
 
    @Autowired
     private IContactDao contactDao;
 
 
- @GetMapping("/formcontact")
+ @GetMapping
     @ResponseBody
     public ResponseEntity<Object> createContact() {
         Contact contact = new Contact();
         return new ResponseEntity<>(contact, HttpStatus.OK);
     }
 
-    @PostMapping("/formcontact")
+    @GetMapping("/list")
     @ResponseBody
-    public ResponseEntity<Object> submitContactForm(@RequestBody Contact contact) {
-        contactDao.save(contact);
-        return new ResponseEntity<>(new SuccessResponse("Contact saved successfully"), HttpStatus.OK);
+    public ResponseEntity<List<Contact>> getAllContacts() {
+        List<Contact> contacts = contactDao.findAll();
+        return new ResponseEntity<>(contacts, HttpStatus.OK);
     }
 
-    @DeleteMapping("/formcontact/delete/{Id}")
+    @GetMapping("/list/{id}")
+    @ResponseBody
+    public ResponseEntity<Object> getContact(@PathVariable Long id) {
+        Contact contact = contactDao.findOne(id);
+        if (contact == null) {
+            return new ResponseEntity<>(new ErrorResponse("Contact not found"), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(contact, HttpStatus.OK);
+    }
+
+    @PostMapping
+    @ResponseBody
+    public ResponseEntity<Object> createContact(@RequestBody Contact contact) {
+        contactDao.save(contact);
+        return new ResponseEntity<>(new SuccessResponse("Contact created successfully"), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/delete/{Id}")
     @ResponseBody
     public ResponseEntity<Object> deleteContact(@PathVariable Long Id) {
         if (Id > 0) {
@@ -53,7 +74,7 @@ public class ContactController{
         }
     }
 
-    @PutMapping("/formcontact/{IdContact}")
+    @PutMapping("/edit/{IdContact}")
     @ResponseBody
     public ResponseEntity<Object> editContact(@PathVariable(value = "IdContact") Long IdContact) {
         if (IdContact == null || IdContact <= 0) {

@@ -17,8 +17,8 @@ public class Sale implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String product;
-    private Integer quantity;
+    private String product, state, name;
+    //private Integer quantity;
     private Double price;
     private Date date;
     
@@ -34,7 +34,7 @@ public class Sale implements Serializable{
     public void setProduct(String product) {
         this.product = product;
     }
-    public Integer getQuantity() {
+    /*public Integer getQuantity() {
         return quantity;
     }
     public void setQuantity(Integer quantity) {
@@ -42,7 +42,7 @@ public class Sale implements Serializable{
     }
     public Double getPrice() {
         return price;
-    }
+    }*/
     public void setPrice(Double price) {
         this.price = price;
     }
@@ -52,5 +52,22 @@ public class Sale implements Serializable{
     public void setDate(Date date) {
         this.date = date;
     }
+    
+    public String getState() {
+        return state;
+    }
+    public void setState(String state) {
+        this.state = state;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public Double getPrice() {
+        return price;
+    }
+    
     
 }

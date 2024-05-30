@@ -9,10 +9,9 @@ import jakarta.persistence.Table;
 public class Contact implements Serializable {
 
     @jakarta.persistence.Id
-    @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long Id;
 
-    private String Name,Cellphone,Email,Direction;
+    private String Name,Cellphone,Email,Direction, ContactType;
 
     public Long getId() {
         return Id;
@@ -52,6 +51,14 @@ public class Contact implements Serializable {
 
     public void setDirection(String direction) {
         Direction = direction;
+    }
+
+    public String getContactType() {
+        return ContactType;
+    }
+
+    public void setContactType(String contactType) {
+        ContactType = contactType;
     }
 
 }

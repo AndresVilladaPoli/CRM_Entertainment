@@ -6,13 +6,11 @@ import com.CRM_Entertainment.backend.Models.Entity.Contact;
 
 public interface IContactDao {
 
-    public List<Contact> findAll();       
-    
+    public List<Contact> findAll();   
+
     public void save(Contact contact);
 
-    public Contact findOne(Long Id);
-
-    public void delete(Long Id);
-
+    public Contact findOne(Long id);
     
+    public void delete(Long id);
 }
