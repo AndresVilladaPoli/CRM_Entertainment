@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
@@ -20,10 +20,17 @@ import {
   changeSidebarType,
 } from "../../store/actions";
 
+// import { ThemeContext } from './ThemeContext';
+
 const Header = props => {
   const [search, setsearch] = useState(false);
- 
+  // const { theme, toggleThemeContext } = useContext(ThemeContext);
 
+  // function handleThemeToggle() {
+  //   console.log("Botón de cambio de tema presionado");
+  //   console.log("Tema actual:", theme);
+  //   toggleTheme(); // Intenta cambiar el tema
+  // }
 
   function tToggle() {
     var body = document.body;
@@ -113,11 +120,16 @@ const Header = props => {
                 </form>
               </div>
             </div>
+            {/* <button
+              type="button"
+              onClick={toggleThemeContext} // Aquí debería estar la función toggleThemeContext
+              className="btn btn-sm px-3 font-size-16 header-item"
+              id="theme-toggle-btn"
+            >
+              {theme === 'light' ? '🌙 Modo Oscuro' : '☀️ Modo Claro'}
+            </button>
 
-
-             
-
-
+            <button onClick={handleThemeToggle}>Cambiar Tema</button> */}
             <ProfileMenu />
 
             <div
@@ -131,6 +143,7 @@ const Header = props => {
           </div>
         </div>
       </header>
+
     </React.Fragment>
   );
 };

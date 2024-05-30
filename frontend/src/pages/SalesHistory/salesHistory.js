@@ -18,6 +18,7 @@ import {
 } from "reactstrap";
 import { Product, Price, Date, Name, State } from "./salesHistoryCol";
 import Breadcrumbs from "components/Common/Breadcrumb";
+
 import {
     getSales as onGetSales,
 } from "store/saleshistory/actions";

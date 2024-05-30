@@ -21,7 +21,7 @@ import * as Yup from "yup"
 import { useFormik } from "formik"
 
 import { Name, Address, Email, Telephone, Type } from "./contactlistCol"
-
+import SuccessModal from "components/Common/SuccessModalContact"
 import Breadcrumbs from "components/Common/Breadcrumb"
 import DeleteModal from "components/Common/DeleteModal"
 
@@ -37,7 +37,7 @@ import { useSelector, useDispatch } from "react-redux"
 
 const ContactsList = props => {
   document.title = "Contacts | SpectraSphere"
-
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const dispatch = useDispatch()
   const [contact, setContact] = useState()
   const validation = useFormik({
@@ -80,6 +80,7 @@ const ContactsList = props => {
         dispatch(onUpdateUser(updateUser))
         setIsEdit(false)
         validation.resetForm()
+        setShowSuccessModal(true);
       } else {
         const newUser = {
           id: Math.floor(Math.random() * (30 - 20)) + 20,
@@ -91,6 +92,7 @@ const ContactsList = props => {
         }
         dispatch(onAddNewUser(newUser))
         validation.resetForm()
+        setShowSuccessModal(true);
       }
       toggle()
     },
@@ -466,6 +468,10 @@ const ContactsList = props => {
                       </Form>
                     </ModalBody>
                   </Modal>
+                  <SuccessModal
+                    show={showSuccessModal}
+                    onCloseClick={() => setShowSuccessModal(false)}
+                  />
                 </CardBody>
               </Card>
             </Col>
