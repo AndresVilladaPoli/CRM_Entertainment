@@ -21,6 +21,7 @@ import * as Yup from "yup"
 import { useFormik } from "formik"
 import { Product, Price, Date, Name, State } from "./salesOpportunityCol"
 import Breadcrumbs from "components/Common/Breadcrumb"
+import SuccessModal from "components/Common/SuccessModalOpportunity"
 import {
   getSales as onGetSales,
   addNewSale as onAddNewSale,
@@ -31,7 +32,7 @@ import { isEmpty } from "lodash"
 
 const SalesOpportunityList = props => {
   document.title = "Sales Opportunity | SpectraSphere"
-
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const dispatch = useDispatch()
 
   const [sale, setSale] = useState()
@@ -78,6 +79,7 @@ const SalesOpportunityList = props => {
 
             setIsEdit(false)
             validation.resetForm()
+            setShowSuccessModal(true);
           } else {
       const newSale = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
@@ -89,6 +91,7 @@ const SalesOpportunityList = props => {
       }
       dispatch(onAddNewSale(newSale))
       validation.resetForm()
+      setShowSuccessModal(true);
     }
       toggle()
     },
@@ -419,6 +422,10 @@ const SalesOpportunityList = props => {
                       </Form>
                     </ModalBody>
                   </Modal>
+                  <SuccessModal
+                    show={showSuccessModal}
+                    onCloseClick={() => setShowSuccessModal(false)}
+                  />
                 </CardBody>
               </Card>
             </Col>

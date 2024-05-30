@@ -20,6 +20,7 @@ const authProtectedRoutes = [
   { path: "/contacts-list", component: <ContactsList /> },
   { path: "/sales-history", component: <SalesHistory /> },
   { path: "/sales-opportunity", component: <SalesOpportunity /> },
+
 ];
 const publicRoutes = [
   { path: "/logout", component: <Logout /> },

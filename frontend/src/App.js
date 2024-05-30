@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+
 import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import { layoutTypes } from "./constants/layout";
@@ -16,6 +17,9 @@ import NonAuthLayout from "./components/NonAuthLayout";
 
 // Import scss
 import "./assets/scss/theme.scss";
+
+
+
 
 // Import Firebase Configuration file
 // import { initFirebaseBackend } from "./helpers/firebase_helper";
@@ -56,6 +60,16 @@ const getLayout = (layoutType) => {
 };
 
 const App = () => {
+  // const { theme, toggleTheme } = useContext(ThemeContext);
+  // const [currentTheme, setCurrentTheme] = useState(theme);
+  // useEffect(() => {
+  //   document.body.className = currentTheme;
+  // }, [currentTheme]);
+
+  // const toggleThemeHandler = () => {
+  //   toggleTheme();
+  //   setCurrentTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+  // };
 
   const { layoutType } = useSelector((state) => ({
     layoutType: state.Layout.layoutType,
@@ -65,6 +79,9 @@ const App = () => {
 
   return (
     <React.Fragment>
+       {/* <button onClick={toggleThemeHandler}>
+        {currentTheme === 'light' ? '🌙 Modo Oscuro' : '☀️ Modo Claro'}
+      </button> */}
       <Routes>
         {publicRoutes.map((route, idx) => (
           <Route
