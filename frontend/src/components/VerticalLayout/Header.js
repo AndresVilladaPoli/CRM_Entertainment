@@ -20,7 +20,6 @@ import {
   changeSidebarType,
 } from "../../store/actions";
 
-// import { ThemeContext } from './ThemeContext';
 
 const Header = props => {
   const [search, setsearch] = useState(false);
@@ -31,6 +30,8 @@ const Header = props => {
   //   console.log("Tema actual:", theme);
   //   toggleTheme(); // Intenta cambiar el tema
   // }
+
+  const [darkMode, setDarkMode] =useState(false);
 
   function tToggle() {
     var body = document.body;
@@ -43,9 +44,15 @@ const Header = props => {
 
   }
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.body.classList.toggle('dark-mode', !darkMode);
+    document.body.classList.toggle('light-mode', darkMode);
+  };
+
   return (
     <React.Fragment>
-      <header id="page-topbar">
+      <header id="page-topbar"> 
         <div className="navbar-header">
           <div className="d-flex">
 
@@ -74,6 +81,7 @@ const Header = props => {
                 <input
                   type="text"
                   className="form-control"
+                  style={{marginTop: "20px"}}
                   placeholder={props.t("Search") + "..."}
                 />
                 <span className="bx bx-search-alt" />
@@ -120,16 +128,18 @@ const Header = props => {
                 </form>
               </div>
             </div>
-            {/* <button
+
+
+            <button
               type="button"
-              onClick={toggleThemeContext} // Aquí debería estar la función toggleThemeContext
+              onClick={toggleDarkMode}
               className="btn btn-sm px-3 font-size-16 header-item"
               id="theme-toggle-btn"
             >
-              {theme === 'light' ? '🌙 Modo Oscuro' : '☀️ Modo Claro'}
+              {darkMode ? '☀️ Modo Oscuro' : '🌙 Modo Claro'}
             </button>
 
-            <button onClick={handleThemeToggle}>Cambiar Tema</button> */}
+
             <ProfileMenu />
 
             <div

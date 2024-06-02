@@ -8,6 +8,29 @@ body {
     outline: none;
   }
 }
+//--------------------------------------
+/* styles.css */
+body {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.light-mode {
+  background-color: black;
+  color: white;
+}
+
+.dark-mode {
+  background-color: white;
+  color: black;
+}
+
+button {
+  margin: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+//--------------------------
 #sidebar-menu {
   ul {
     li {

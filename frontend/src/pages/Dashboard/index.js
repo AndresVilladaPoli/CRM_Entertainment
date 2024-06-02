@@ -26,7 +26,7 @@ const Dashboard = props => {
 
   return (
     <React.Fragment>
-      <div className="page-content" style={{backgroundColor:'#E3DDE7'}}>
+      <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumb */}
           <Breadcrumbs
@@ -35,7 +35,7 @@ const Dashboard = props => {
           />
 
           <Row>
-            <Col xl="6"  >
+            <Col xl="6" style={{ border: '6px', border: 'radius', color: 'black'}}  >
               <MonthlyEarning
                 name="Contacts"
                 route="/contacts-list"
@@ -44,7 +44,7 @@ const Dashboard = props => {
             </Col>
           </Row>
           <Row>
-            <Col xl="6"  >
+            <Col xl="6"  style={{ border: '6px', border: 'radius', color: 'black'}} >
               <MonthlyEarning
                 name="Sales History"
                 route="/sales-history"
@@ -53,7 +53,7 @@ const Dashboard = props => {
             </Col>
           </Row>
           <Row>
-            <Col xl="6"  >
+            <Col xl="6"  style={{ border: '6px', border: 'radius', color: 'black'}} >
               <MonthlyEarning
                 name="Sales Opportunity"
                 route="/sales-opportunity"

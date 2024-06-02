@@ -394,7 +394,7 @@ function GlobalFilter({
                 value={value || ""}
               />
             </label>
-            <i className="bx bx-search-alt search-icon"></i>
+            <i className="bx bx-search-alt search-icon" style={{marginTop: '10px', color: 'black'}}></i>
           </div>
         </div>
       </Col>
@@ -492,7 +492,7 @@ const TableContainer = ({
   return (
     <Fragment>
       <Row className="mb-2" >
-        <Col md={customPageSizeOptions ? 2 : 1}>
+        <Col md={customPageSizeOptions ? 2 : 1} style={{marginTop: '15px'}}>
           <select
             className="form-select"
             value={pageSize}
@@ -647,7 +647,7 @@ const TableContainer = ({
             </Button>
           </div>
         </Col>
-        <Col className="col-md-auto d-none d-md-block">
+        <Col className="col-md-auto d-none d-md-block" style={{color: 'black'}}>
           Page{" "}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
