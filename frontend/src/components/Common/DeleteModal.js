@@ -13,6 +13,7 @@ const DeleteModal = ({ show, onDeleteClick, onCloseClick }) => {
               <i className="mdi mdi-trash-can-outline"></i>
             </div>
           </div>
+          
           <p className="text-muted font-size-16 mb-4">Are you sure you want to permanently erase the contact.</p>
 
           <div className="hstack gap-2 justify-content-center mb-0">
