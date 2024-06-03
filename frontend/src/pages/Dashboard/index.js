@@ -62,6 +62,16 @@ const Dashboard = props => {
             </Col>
           </Row>
 
+          <Row>
+            <Col xl="6"  style={{ border: '6px', border: 'radius', color: 'black'}} >
+              <MonthlyEarning
+                name="Interactions"
+                route="/interactions"
+                
+              />
+            </Col>
+          </Row>
+
         </Container>
       </div>
     </React.Fragment>

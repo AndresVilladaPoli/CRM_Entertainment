@@ -412,9 +412,12 @@ const TableContainer = ({
   isAddUserList,
   isAddSaleList,
   isAddSaleOppList,
+  isAddInteractionList,
   handleOrderClicks,
   handleUserClick,
   handleSaleClick,
+  handleInteractionClick,
+
   handleCustomerClick,
   isAddCustList,
   customPageSize,
@@ -568,6 +571,22 @@ const TableContainer = ({
               >
                 <i className="mdi mdi-plus-circle-outline me-1" />
                 Create New Sale
+              </Button>
+            </div>
+          </Col>
+        )}
+
+{isAddInteractionList && (
+          <Col sm="7">
+            <div className="text-sm-end">
+              <Button
+                type="button"
+                className="btn mb-2 me-2"
+                onClick={handleInteractionClick}
+                style={{ backgroundColor: "#721E81", color: "white" }}
+              >
+                <i className="mdi mdi-plus-circle-outline me-1" />
+                Create New Interaction
               </Button>
             </div>
           </Col>
