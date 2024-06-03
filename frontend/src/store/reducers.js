@@ -9,6 +9,8 @@ import contacts from "./contacts/reducer";
 
 import Dashboard from "./dashboard/reducer";
 import saleshistory from "./saleshistory/reducer";
+import interactionsh from "./interactions/reducer";
+
 
 
 
@@ -20,6 +22,7 @@ const rootReducer = combineReducers({
   contacts,
   saleshistory,
   Dashboard,
+  interactionsh
  
 });
 

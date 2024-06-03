@@ -6,6 +6,8 @@ import contactsSaga from "./contacts/saga";
 
 import dashboardSaga from "./dashboard/saga";
 import saleshistorySaga from "./saleshistory/saga";
+import interactionsSaga from "./interactions/saga";
+
 
 export default function* rootSaga() {
   yield all([
@@ -14,6 +16,7 @@ export default function* rootSaga() {
     fork(contactsSaga),
     fork(saleshistorySaga),
     fork(dashboardSaga),
+    fork(interactionsSaga),
    
   ]);
 }

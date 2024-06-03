@@ -10,3 +10,7 @@ export const GET_SALES = "/sales";
 export const ADD_NEW_SALE = "/add/sale";
 export const UPDATE_SALE = "/update/sale";
 
+
+export const GET_INTERACTIONS = "/interactions";
+export const ADD_NEW_INTERACTION = "/add/interaction";
+

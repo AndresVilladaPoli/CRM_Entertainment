@@ -2,7 +2,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import * as url from "../url_helper";
 
-import {  users as members, sales as members2
+import {  users as members, sales as members2, interactionss as inter
 } from "../../common/data"
 
 let users = [
@@ -123,6 +123,35 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onGet(url.GET_INTERACTIONS).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log(inter)
+
+        if (inter) {
+          resolve([200, inter]);
+        } else {
+          reject([400, "Cannot get interactions"]);
+        }
+      });
+    });
+  });
+  
+  mock.onPost(url.ADD_NEW_INTERACTION).reply(interaction => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (interaction && interaction.data) {
+          resolve([200, interaction.data]);
+        } else {
+          reject([400, "Cannot add interaction"]);
+        }
+      });
+    });
+  });
+
 };
+
+
+
 
 export default fakeBackend;

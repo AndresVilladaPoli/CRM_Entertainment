@@ -1,6 +1,7 @@
 import axios from "axios";
 import { del, get, post, put } from "./api_helper";
 import * as url from "./url_helper";
+import { interactionSettingsStore } from "@fullcalendar/core";
 
 const getLoggedInUser = () => {
   const user = localStorage.getItem("user");
@@ -27,6 +28,10 @@ export const getSales = () => get(url.GET_SALES);
 export const addNewSale = sale => post(url.ADD_NEW_SALE, sale);
 
 export const updateSale = sale => put(url.UPDATE_SALE, sale);
+
+export const getInteractions = () => get(url.GET_INTERACTIONS);
+
+export const addNewInteraction = interaction => post(url.ADD_NEW_INTERACTION, interaction);
 
 
 

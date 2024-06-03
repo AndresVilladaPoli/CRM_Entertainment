@@ -177,6 +177,15 @@ const SidebarContent = props => {
               </Link>
             
             </li>
+
+            <li>
+              <Link to="/interactions" >
+                <i className="bx bx-conversation"></i>
+                <span>{props.t("Interactions")}</span>
+              </Link>
+            
+            </li>
+
           </ul>
         </div>
       </SimpleBar>
