@@ -3,6 +3,7 @@ package com.CRM_Entertainment.backend.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,20 +16,24 @@ import com.CRM_Entertainment.backend.Models.Entity.User;
 
 
 @Controller
-
 public class LoginController {
 
     @Autowired
     private IUserDao userDao;
 
-     @PostMapping("/login")
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    
+
+
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        
         User user = userDao.findByUsername(loginRequest.getUsernameOrEmail());
         if (user == null) {
             user = userDao.findByEmail(loginRequest.getUsernameOrEmail());
         }
-        if (user != null && user.getPassword().equals(loginRequest.getPassword())) {
+        if (user != null && passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             return ResponseEntity.ok("User logged in successfully");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username, email, or password");

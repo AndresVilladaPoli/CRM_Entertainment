@@ -3,7 +3,7 @@ package com.CRM_Entertainment.backend.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +22,8 @@ public class RegisterController {
      @Autowired
     private IRegisterDao registerDao;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
    @GetMapping("/register")
     @ResponseBody
@@ -29,12 +31,6 @@ public class RegisterController {
         User user = new User();
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
-    /*@GetMapping("/register")
-    public String registerForm(Model model) {
-        model.addAttribute("user", new User());
-        return "register";
-    }*/
 
     @PostMapping("/register")
     @ResponseBody
@@ -45,6 +41,9 @@ public class RegisterController {
         if (registerDao.findByEmail(user.getEmail()) != null) {
             return new ResponseEntity<>(new ErrorResponse("Email address is already in use"), HttpStatus.BAD_REQUEST);
         }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         registerDao.saveUser(user);
         return new ResponseEntity<>(new SuccessResponse("User registered successfully"), HttpStatus.OK);
     }
