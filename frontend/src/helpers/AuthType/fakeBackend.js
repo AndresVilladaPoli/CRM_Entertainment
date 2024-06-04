@@ -149,6 +149,18 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPut(url.UPDATE_INTERACTION).reply(interaction => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (interaction && interaction.data) {
+          resolve([200, interaction.data]);
+        } else {
+          reject([400, "Cannot update note"]);
+        }
+      });
+    });
+  });
+
 };
 
 

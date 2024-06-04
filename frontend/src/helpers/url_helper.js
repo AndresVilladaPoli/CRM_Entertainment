@@ -13,4 +13,4 @@ export const UPDATE_SALE = "/update/sale";
 
 export const GET_INTERACTIONS = "/interactions";
 export const ADD_NEW_INTERACTION = "/add/interaction";
-
+export const UPDATE_INTERACTION = "/update/interaction";

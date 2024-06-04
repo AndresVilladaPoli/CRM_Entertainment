@@ -13,7 +13,7 @@ const interactionss = [
     client: "Jose",
     description: "Book Harry Potter",
     date: "2022-12-29",
-
+    note: "This is incredible"
   },
 
 ]

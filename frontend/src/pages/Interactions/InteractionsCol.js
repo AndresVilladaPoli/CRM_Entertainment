@@ -27,6 +27,9 @@ const Name = (cell) => {
 const Client = (cell) => {
     return cell.value ? cell.value : '';
 };
+const Note = (cell) => {
+    return cell.value ? cell.value : '';
+};
 
 const Type = (cell) => {
     return (
@@ -47,4 +50,5 @@ export {
     Date,
     Name,
     Type,
+    Note,
 };

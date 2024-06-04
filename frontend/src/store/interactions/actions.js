@@ -5,6 +5,9 @@ import {
   ADD_NEW_INTERACTION,
   ADD_INTERACTION_SUCCESS,
   ADD_INTERACTION_FAIL,
+  UPDATE_INTERACTION,
+  UPDATE_INTERACTION_SUCCESS,
+  UPDATE_INTERACTION_FAIL,
 
 
 } from "./actionTypes"
@@ -35,5 +38,20 @@ export const addInteractionSuccess = interaction => ({
 
 export const addInteractionFail = error => ({
   type: ADD_INTERACTION_FAIL,
+  payload: error,
+})
+
+export const updateInteraction = user => ({
+  type: UPDATE_INTERACTION,
+  payload: user,
+})
+
+export const updateInteractionSuccess = user => ({
+  type: UPDATE_INTERACTION_SUCCESS,
+  payload: user,
+})
+
+export const updateInteractionFail = error => ({
+  type: UPDATE_INTERACTION_FAIL,
   payload: error,
 })

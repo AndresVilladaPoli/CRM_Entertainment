@@ -432,22 +432,30 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { Type, Client, Date, Name, Description } from "./InteractionsCol";
+import { Type, Client, Date, Name, Description, Note } from "./InteractionsCol";
 import Breadcrumbs from "components/Common/Breadcrumb";
-import SuccessModal from "components/Common/SuccessModalOpportunity";
 import {
   getInteractions as onGetInteractions,
   addNewInteraction as onAddNewInteraction,
+  updateInteraction as onUpdateInteraction,
 } from "store/interactions/actions";
 import {
   getUsers as onGetUsers
 } from "store/contacts/actions"
+import SuccessModalInteraction from "components/Common/SuccessModalInteraction";
+import SuccessModalEditInteraction from "components/Common/SuccessModalEditInteraction";
+import DeleteModalNote from "components/Common/DeleteModalNote";
 import { useSelector, useDispatch } from "react-redux";
 import { isEmpty } from "lodash";
 
 const InteractionsList = ({ contacts }) => {
   document.title = "Interactions | SpectraSphere";
+  
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showEditSuccessModal, setShowEditSuccessModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [noteToDelete, setNoteToDelete] = useState(null);
+
   const dispatch = useDispatch();
   const [interaction, setInteraction] = useState();
 
@@ -462,14 +470,16 @@ const InteractionsList = ({ contacts }) => {
       type: (interaction && interaction.type) || "Call",
       name: (interaction && interaction.name) || "",
       description: (interaction && interaction.description) || "",
-      client: (interaction && interaction.client) || adminSalesPointUserList.length > 0 ? adminSalesPointUserList[0].id : '',
+      client: (interaction && interaction.client) || (adminSalesPointUserList.length > 0 ? adminSalesPointUserList[0].id : ''),
       date: (interaction && interaction.date) || "",
+      note: (interaction && interaction.note) || "",
     },
     validationSchema: Yup.object({
       type: Yup.string().required("Please select the type of interaction"),
       name: Yup.string().required("Please enter the interaction's name"),
       client: Yup.string().required("Please select the client's name"),
       description: Yup.string().required("Please enter the description"),
+      note: Yup.string(),
       date: Yup.string()
         .matches(
           /^(?:(?:19|20)\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/,
@@ -478,7 +488,14 @@ const InteractionsList = ({ contacts }) => {
         .required("Please enter the contact's address"),
     }),
     onSubmit: (values) => {
-
+      if (isEdit) {
+        const updatedInteraction = {
+          ...interaction,
+          note: values.note,
+        };
+        dispatch(onUpdateInteraction(updatedInteraction));
+        setShowEditSuccessModal(true);
+      } else {
       const salesPointUserName = adminSalesPointUserList.find(usersList => usersList.id === values.client)?.name;
 
 
@@ -491,10 +508,13 @@ const InteractionsList = ({ contacts }) => {
         client: values["client"],
         description: values["description"],
         date: values["date"],
+        note: values["note"],
       };
+
       dispatch(onAddNewInteraction(newInteraction));
-      validation.resetForm();
       setShowSuccessModal(true);
+    }
+      validation.resetForm();
       toggle();
     },
   });
@@ -527,7 +547,7 @@ const InteractionsList = ({ contacts }) => {
       },
       {
         Header: "Client",
-        accessor: (row) => row.clientName || row.client, // Si clientName existe, lo usa, de lo contrario, usa client
+        accessor: (row) => row.clientName || row.client,
         filterable: true,
         Cell: (cellProps) => {
           return <Client {...cellProps} />;
@@ -547,6 +567,46 @@ const InteractionsList = ({ contacts }) => {
         filterable: true,
         Cell: (cellProps) => {
           return <Description {...cellProps} />;
+        },
+      },
+      {
+        Header: "Note",
+        accessor: "note",
+        filterable: true,
+        Cell: (cellProps) => {
+          return <Note {...cellProps} />;
+        },
+      },
+      {
+        Header: "Action Notes",
+        Cell: (cellProps) => {
+          return (
+            <div className="d-flex gap-3">
+              <Link
+                to="#"
+                className="text-success"
+                onClick={(event) => handleEditNoteClick(event, cellProps.row.original)}
+              >
+                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
+                <UncontrolledTooltip placement="top" target="edittooltip">
+                  Edit
+                </UncontrolledTooltip>
+              </Link>
+              <Link
+                to="#"
+                className="text-danger"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  handleDeleteNoteClick(userData);
+                }}
+              >
+                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
+                <UncontrolledTooltip placement="top" target="deletetooltip">
+                  Delete
+                </UncontrolledTooltip>
+              </Link>
+            </div>
+          );
         },
       },
 
@@ -576,6 +636,28 @@ const InteractionsList = ({ contacts }) => {
   const toggle = () => {
     setModal(!modal);
   };
+
+  const handleEditNoteClick = (event, interaction) => {
+    event.preventDefault();
+    setInteraction(interaction);
+    setIsEdit(true);
+    toggle();
+
+  };
+
+  const handleDeleteNoteClick = (interaction) => {
+
+    
+    const updatedInteraction = {
+      
+      ...interaction,
+      note: '',
+    };
+    dispatch(onUpdateInteraction(updatedInteraction));
+    setShowDeleteModal(true);
+  };
+
+
 
   // const handleInteractionClick = (arg) => {
   //   const interaction = arg;
@@ -626,14 +708,18 @@ const InteractionsList = ({ contacts }) => {
                     data={interactions}
                     isGlobalFilter={true}
                     isAddInteractionList={true}
-                    handleInteractionClick={handleInteractionClicks}
+                    handleInteractionClick={() => {
+                      setInteraction({});
+                      setIsEdit(false);
+                      toggle();
+                    }}
                     customPageSize={10}
                     className="custom-header-css"
                   />
 
                   <Modal isOpen={modal} toggle={toggle}>
                     <ModalHeader toggle={toggle} tag="h4">
-                      {!!isEdit ? "Edit Interaction" : "Add Interaction"}
+                      {!!isEdit ? "Edit Note" : "Add Interaction"}
                     </ModalHeader>
                     <ModalBody>
                       <Form
@@ -642,7 +728,39 @@ const InteractionsList = ({ contacts }) => {
                           validation.handleSubmit();
                           return false;
                         }}
+                        
                       >
+                              {isEdit ? (
+        <Row form>
+          <Col xs={12}>
+            <div className="mb-3">
+              <Label className="form-label">Note</Label>
+              <Input
+                name="note"
+                className="form-control"
+                placeholder="Enter Note"
+                type="text"
+                onChange={validation.handleChange}
+                onBlur={validation.handleBlur}
+                value={validation.values.note || ""}
+                invalid={
+                  validation.touched.note &&
+                  validation.errors.note
+                    ? true
+                    : false
+                }
+              />
+              {validation.touched.note &&
+              validation.errors.note ? (
+                <FormFeedback type="invalid">
+                  {validation.errors.note}
+                </FormFeedback>
+              ) : null}
+            </div>
+          </Col>
+        </Row>
+      ) : (
+        <>
                         <Row form>
                           <Col xs={12}>
                             <div className="mb-3">
@@ -757,20 +875,47 @@ const InteractionsList = ({ contacts }) => {
                                 </FormFeedback>
                               ) : null}
                             </div>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col>
-                            <div className="text-end">
-                              <button
-                                type="submit"
-                                className="btn btn-success save-user"
-                              >
-                                Save
-                              </button>
+                            <div className="mb-3">
+                              <Label className="form-label">Note</Label>
+                              <Input
+                                name="note"
+                                className="form-control"
+                                placeholder="Enter Note"
+                                type="text"
+                                onChange={validation.handleChange}
+                                onBlur={validation.handleBlur}
+                                value={validation.values.note || ""}
+                                invalid={
+                                  validation.touched.note &&
+                                  validation.errors.note
+                                    ? true
+                                    : false
+                                }
+                              />
+                              {validation.touched.note &&
+                              validation.errors.note ? (
+                                <FormFeedback type="invalid">
+                                  {validation.errors.note}
+                                </FormFeedback>
+                              ) : null}
                             </div>
                           </Col>
-                        </Row>
+                        </Row>                
+                        </>    
+                       )}
+                      <Row>
+                        <Col>
+                          <div className="text-end">
+                            <button
+                              type="submit"
+                              className="btn btn-success save-user"
+                            >
+                              Save
+                            </button>
+                          </div>
+                        </Col>
+                      </Row>
+                        
                       </Form>
                     </ModalBody>
                   </Modal>
@@ -779,11 +924,20 @@ const InteractionsList = ({ contacts }) => {
             </Col>
           </Row>
         </Container>
-        <SuccessModal
-          isOpen={showSuccessModal}
-          toggle={() => setShowSuccessModal(!showSuccessModal)}
-          message="User details saved successfully."
-        />
+        <SuccessModalInteraction
+  show={showSuccessModal && !showEditSuccessModal}
+  onCloseClick={() => setShowSuccessModal(false)}
+/>
+<SuccessModalEditInteraction
+  show={showEditSuccessModal && !showSuccessModal}
+  onCloseClick={() => setShowEditSuccessModal(false)}
+/>
+<DeleteModalNote
+  show={showDeleteModal}
+  onCloseClick={() => setShowDeleteModal(false)}
+  onDeleteClick={handleDeleteNoteClick}
+/>
+
       </div>
     </React.Fragment>
   );
