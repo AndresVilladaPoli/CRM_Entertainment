@@ -3,7 +3,8 @@ import {
   GET_INTERACTIONS_FAIL,
   ADD_INTERACTION_SUCCESS,
   ADD_INTERACTION_FAIL,
-
+  UPDATE_INTERACTION_SUCCESS,
+  UPDATE_INTERACTION_FAIL,
   
 } from "./actionTypes";
 
@@ -40,7 +41,22 @@ const interactionsh = (state = INIT_STATE, action) => {
         error: action.payload,
       };
       
-
+      case UPDATE_INTERACTION_SUCCESS:
+        return {
+          ...state,
+          interactions: state.interactions.map(interaction =>
+            interaction.id.toString() === action.payload.id.toString()
+              ? { ...interaction, ...action.payload }
+              : interaction
+          ),
+          error: {},
+        };
+  
+      case UPDATE_INTERACTION_FAIL:
+        return {
+          ...state,
+          error: action.payload,
+        }
     default:
       return state;
   }

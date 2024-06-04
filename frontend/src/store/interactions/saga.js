@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects"
-import { GET_INTERACTIONS,  ADD_NEW_INTERACTION } from "./actionTypes"
+import { GET_INTERACTIONS,  ADD_NEW_INTERACTION, UPDATE_INTERACTION } from "./actionTypes"
 
 
 import {
@@ -7,10 +7,11 @@ import {
   getInteractionsFail,
   addInteractionFail,
   addInteractionSuccess,
-
+  updateInteractionSuccess,
+  updateInteractionFail,
 } from "./actions"
 
-import { getInteractions,  addNewInteraction} from "../../helpers/fakebackend_helper"
+import { getInteractions,  addNewInteraction, updateInteraction} from "../../helpers/fakebackend_helper"
 
 function* fetchInteractions() {
   try {
@@ -32,12 +33,19 @@ function* onAddNewInteraction({ payload: interaction }) {
   }
 }
 
-
+function* onUpdateInteraction({ payload: interaction }) {
+  try {
+    const response = yield call(updateInteraction, interaction)
+    yield put(updateInteractionSuccess(response))
+  } catch (error) {
+    yield put(updateInteractionFail(error))
+  }
+}
 
 function* InteractionsSaga() {
   yield takeEvery(GET_INTERACTIONS, fetchInteractions)
   yield takeEvery(ADD_NEW_INTERACTION, onAddNewInteraction)
-
+  yield takeEvery(UPDATE_INTERACTION, onUpdateInteraction)
 
 }
 

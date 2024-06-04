@@ -33,7 +33,7 @@ export const getInteractions = () => get(url.GET_INTERACTIONS);
 
 export const addNewInteraction = interaction => post(url.ADD_NEW_INTERACTION, interaction);
 
-
+export const updateInteraction = interaction => put(url.UPDATE_INTERACTION, interaction);
 
 export {
   getLoggedInUser,
