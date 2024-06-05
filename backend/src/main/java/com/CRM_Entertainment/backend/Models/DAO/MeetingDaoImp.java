@@ -7,10 +7,10 @@ import com.CRM_Entertainment.backend.Models.Entity.Meeting;
 
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Id;
-import jakarta.persistence.NoResultException;
+//import jakarta.persistence.Id;
+//import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
+//import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
 @Repository

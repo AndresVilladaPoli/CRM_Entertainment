@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 //import org.springframework.web.bind.annotation.RestController;
 //import org.springframework.ui.Model;
 
+
 import com.CRM_Entertainment.backend.Models.DAO.IRegisterDao;
+import com.CRM_Entertainment.backend.Models.Dto.PasswordEncryption;
 import com.CRM_Entertainment.backend.Models.Entity.User;
 
 @Controller
@@ -21,6 +23,9 @@ public class RegisterController {
 
      @Autowired
     private IRegisterDao registerDao;
+
+    @Autowired
+    private PasswordEncryption passwordEncryption;
 
 
    @GetMapping("/register")
@@ -45,6 +50,9 @@ public class RegisterController {
         if (registerDao.findByEmail(user.getEmail()) != null) {
             return new ResponseEntity<>(new ErrorResponse("Email address is already in use"), HttpStatus.BAD_REQUEST);
         }
+        // Encrypt the password before saving the user
+        String encryptedPassword = passwordEncryption.encryptPassword(user.getPassword());
+        user.setPassword(encryptedPassword);
         registerDao.saveUser(user);
         return new ResponseEntity<>(new SuccessResponse("User registered successfully"), HttpStatus.OK);
     }

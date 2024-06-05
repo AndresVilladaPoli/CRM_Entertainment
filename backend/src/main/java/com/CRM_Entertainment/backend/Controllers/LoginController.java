@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.CRM_Entertainment.backend.Models.DAO.IUserDao;
 import com.CRM_Entertainment.backend.Models.Dto.LoginRequest;
+import com.CRM_Entertainment.backend.Models.Dto.PasswordEncryption;
 import com.CRM_Entertainment.backend.Models.Entity.User;
 
 
@@ -21,14 +22,17 @@ public class LoginController {
     @Autowired
     private IUserDao userDao;
 
-     @PostMapping("/login")
+    @Autowired
+    private PasswordEncryption passwordEncryption;
+
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        
         User user = userDao.findByUsername(loginRequest.getUsernameOrEmail());
         if (user == null) {
             user = userDao.findByEmail(loginRequest.getUsernameOrEmail());
         }
-        if (user != null && user.getPassword().equals(loginRequest.getPassword())) {
+        
+        if (user != null && passwordEncryption.checkPassword(loginRequest.getPassword(), user.getPassword())) {
             return ResponseEntity.ok("User logged in successfully");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username, email, or password");
