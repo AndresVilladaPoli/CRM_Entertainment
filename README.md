@@ -44,3 +44,50 @@ Ultimately, SpectraSphere emerges as an indispensable tool for companies in the 
 ```bash
   $ cd ..
 ```
+### How to Install The Backend of the project
+
+- First of all, you need to have jdk 17 version. We recommend using Microsoft Visual Studio Code as your IDE.
+- Then, within Visual Studio Code, you need to download the following Spring Boot extensions:
+	- Spring initializr 
+	- Spring Boot dashboard 
+	- Spring boot tools 
+	- Spring Boot Extensión pack
+
+![Image text](README_IMG/SpringBoot.png)
+
+   Also, it is recommended to have the Live Server extension 
+   
+   ![Image text](README_IMG/LiveS.PNG)
+   
+   - Now, we must download MySQL Workbench to create our database
+	- We need to create a new connection, preferably called with a name alluding to the project and with the other default values
+	![Image text](README_IMG/Conection.PNG)
+	
+   - the localhost user must be "root" (default user) and must not have a password
+   - then, Inside the new connection, we must create a new Schema called spectradb
+  
+  ![Image text](README_IMG/Schema.PNG)
+
+If you want to add a password or change the user, you can do so by going to backend\src\main\resources and editing the 'applicationProperties' file
+
+![Image text](README_IMG/DatabaseConfig.PNG)
+
+
+
+To initialize the 'backend' of the project, we need to go to the BackendApplication file (located in backend\src\main\java\com\CRM_Entertainment\backend) and run
+
+
+![Image text](README_IMG/DemoApplication.PNG)
+
+
+## Development Approach
+
+We followed the traditional methodology for coding. For the frontend development, we utilized React.js framework, while for the backend, Spring Boot was employed. Additionally, Visual Studio Code was the IDE used for development.
+
+
+## Authors ✒️
+
+- [Andrea Alvarez Posada](https://github.com/andreaalpo)
+- [Dayron Restrepo Perez](https://github.com/DayronR12)
+- [Mateo Echeverri Jiménez](https://github.com/Mateo8888)
+- [Andrés Ricardo Villada Marín](https://github.com/AndresVilladaPoli)
