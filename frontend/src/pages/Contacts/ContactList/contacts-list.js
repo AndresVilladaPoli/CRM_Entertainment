@@ -896,33 +896,44 @@ const ContactsList = (props) => {
                               ) : null}
                             </div>
                             <div className="mb-3">
-                              <Label className="form-label">Type</Label>
-                              <Input
-                                name="type"
+                               <Label className="form-label">Type</Label>
+                               <Input
                                 type="select"
-                                className="form-select"
-                                onChange={validation.handleChange}
-                                onBlur={validation.handleBlur}
-                                value={validation.values.type || "Client"}
-                              >
-                                <option>Client</option>
-                                <option>Vendor</option>
-                              </Input>
-                              {validation.touched.type &&
-                              validation.errors.type ? (
-                                <FormFeedback type="invalid">
-                                  {validation.errors.type}
-                                </FormFeedback>
-                              ) : null}
-                            </div>
+                                name="type"
+                                 onChange={validation.handleChange}
+                                 onBlur={validation.handleBlur}
+                                 value={validation.values.type || ""}
+                                 invalid={
+                                   validation.touched.type &&
+                                   validation.errors.type
+                                     ? true
+                                     : false
+                                 }
+                               >
+                                 <option value="Client">Client</option>
+                                 <option value="Provider">Provider</option>
+                                 <option value="Employee">Employee</option>
+                                 <option value="Partner">Partner</option>
+                               </Input>
+                               {validation.touched.type &&
+                               validation.errors.type ? (
+                                 <FormFeedback type="invalid">
+                                   {validation.errors.type}
+                                 </FormFeedback>
+                               ) : null}
+                             </div>
                           </Col>
                         </Row>
                         <Row>
                           <Col>
                             <div className="text-end">
-                              <button
+                            <button
                                 type="submit"
-                                className="btn btn-success save-user"
+                                className="btn save-user"
+                                style={{
+                                    backgroundColor: "#C9B7D2",
+                                    color: "#0A0B24",
+                                  }}
                               >
                                 Save
                               </button>
