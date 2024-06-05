@@ -499,7 +499,6 @@ const InteractionsList = ({ contacts }) => {
       const salesPointUserName = adminSalesPointUserList.find(usersList => usersList.id === values.client)?.name;
 
 
-
       const newInteraction = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         type: values["type"],
@@ -547,11 +546,11 @@ const InteractionsList = ({ contacts }) => {
       },
       {
         Header: "Client",
-        accessor: (row) => row.clientName || row.client,
+        accessor: "clientName",
         filterable: true,
-        Cell: (cellProps) => {
-          return <Client {...cellProps} />;
-        },
+        // Cell: (cellProps) => {
+        //   return <Client {...cellProps} />;
+        // },
       },
       {
         Header: "Date",
@@ -906,10 +905,14 @@ const InteractionsList = ({ contacts }) => {
                       <Row>
                         <Col>
                           <div className="text-end">
-                            <button
-                              type="submit"
-                              className="btn btn-success save-user"
-                            >
+                          <button
+                                type="submit"
+                                className="btn save-user"
+                                style={{
+                                    backgroundColor: "#C9B7D2",
+                                    color: "#0A0B24",
+                                  }}
+                              >
                               Save
                             </button>
                           </div>

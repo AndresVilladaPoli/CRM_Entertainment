@@ -10,7 +10,7 @@ const interactionss = [
     id: 1,
     type: "Call",
     name: "Esteban",
-    client: "Jose",
+    clientName:"Jose",
     description: "Book Harry Potter",
     date: "2022-12-29",
     note: "This is incredible"
