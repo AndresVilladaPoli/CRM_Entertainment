@@ -23,6 +23,20 @@ In addition to contact management and interactions, SpectraSphere facilitates sa
 Ultimately, SpectraSphere emerges as an indispensable tool for companies in the digital entertainment sector looking to stand out in an increasingly competitive market, by offering them the necessary tools to manage and cultivate successful relationships with their customers.
 
 
+## Screenshots
+
+On the CRM site, you can view an intuitive interface.
+![Contacts](README_IMG/home.PNG)
+
+You will be able to manage not only your interactions with customers.
+![Interactions](README_IMG/interactions.PNG)
+
+but also your contacts and sales opportunities.
+![Contacts](README_IMG/contacts.PNG)
+![Sales opportunities](README_IMG/salesopportunity.PNG)
+
+
+
 ## How to install
 
 - Open the Git Bash console.
@@ -40,9 +54,9 @@ Ultimately, SpectraSphere emerges as an indispensable tool for companies in the 
 ```bash
   $ npm install
 ```
-- Then, return to the main directory
+- Then, run `npm start` command to start the frontend
 ```bash
-  $ cd ..
+  $ npm start
 ```
 ### How to Install The Backend of the project
 
@@ -82,8 +96,15 @@ To initialize the 'backend' of the project, we need to go to the BackendApplicat
 
 ## Development Approach
 
-We followed the traditional methodology for coding. For the frontend development, we utilized React.js framework, while for the backend, Spring Boot was employed. Additionally, Visual Studio Code was the IDE used for development.
+We followed the agil methodologies for coding. For the frontend development, we utilized React.js framework, while for the backend, Spring Boot was employed. Additionally, Visual Studio Code was the IDE used for development.
 
+
+## Resources
+We utilized the following resources throughout the project
+- [Bootstrap icons](https://icons.getbootstrap.com)
+- [Font Awesome](https://fontawesome.com)
+- [Font Squirrel](https://www.fontsquirrel.com)
+- [Google Fonts API](https://fonts.google.com)
 
 ## Authors ✒️
 
